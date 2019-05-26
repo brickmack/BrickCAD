@@ -28,7 +28,7 @@ BEGIN
       VALUE "CompanyName", "Blender Foundation"
       VALUE "FileDescription", "Blender"
       VALUE "LegalCopyright", "GPLv2 (Blender Foundation)"
-      VALUE "OriginalFilename", "blender.exe"
+      VALUE "OriginalFilename", "brickcad.exe"
       VALUE "ProductName", "Blender"
     END
   END

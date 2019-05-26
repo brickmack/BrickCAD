@@ -242,7 +242,7 @@ if(WITH_PYTHON_MODULE)
   # but not OSX which _must_ be 'MODULE'
   add_library(blender MODULE ${SRC})
   set_target_properties(
-    blender
+    brickcad
     PROPERTIES
       PREFIX ""
       OUTPUT_NAME bpy
@@ -252,7 +252,7 @@ if(WITH_PYTHON_MODULE)
 
   if(APPLE)
     set_target_properties(
-      blender
+      brickcad
       PROPERTIES
         MACOSX_BUNDLE TRUE
         LINK_FLAGS_RELEASE "${PLATFORM_LINKFLAGS}"
@@ -263,20 +263,20 @@ if(WITH_PYTHON_MODULE)
   if(WIN32)
     # python modules use this
     set_target_properties(
-      blender
+      brickcad
       PROPERTIES
       SUFFIX ".pyd"
     )
   endif()
 
 else()
-  add_executable(blender ${EXETYPE} ${SRC})
-  WINDOWS_SIGN_TARGET(blender)
+  add_executable(brickcad ${EXETYPE} ${SRC})
+  WINDOWS_SIGN_TARGET(brickcad)
 endif()
 
 if(WITH_BUILDINFO)
   # explicitly say that the executable depends on the buildinfo
-  add_dependencies(blender buildinfo)
+  add_dependencies(brickcad buildinfo)
 endif()
 
 
@@ -340,10 +340,10 @@ elseif(APPLE)
   if(WITH_PYTHON_MODULE)
     set(TARGETDIR_VER ${BLENDER_VERSION})
   else()
-    set(TARGETDIR_VER blender.app/Contents/Resources/${BLENDER_VERSION})
+    set(TARGETDIR_VER brickcad.app/Contents/Resources/${BLENDER_VERSION})
   endif()
   # Skip relinking on cpack / install
-  set_target_properties(blender PROPERTIES BUILD_WITH_INSTALL_RPATH true)
+  set_target_properties(brickcad PROPERTIES BUILD_WITH_INSTALL_RPATH true)
 endif()
 
 
@@ -411,7 +411,7 @@ if(WITH_INTERNATIONAL)
     locales
     DEPENDS ${_all_mo_files})
 
-  add_dependencies(blender locales)
+  add_dependencies(brickcad locales)
 
   # Generate INSTALL rules
   install(
@@ -450,7 +450,7 @@ endif()
 if("${CMAKE_GENERATOR}" MATCHES ".*Makefiles.*")
   # message after building.
   add_custom_command(
-    TARGET blender POST_BUILD MAIN_DEPENDENCY blender
+    TARGET brickcad POST_BUILD MAIN_DEPENDENCY brickcad
     COMMAND ${CMAKE_COMMAND} -E
             echo 'now run: \"make install\" to copy runtime files and scripts to ${TARGETDIR_VER}'
   )
@@ -465,11 +465,11 @@ if(UNIX AND NOT APPLE)
   if(NOT WITH_PYTHON_MODULE)
     if(WITH_DOC_MANPAGE)
       add_custom_target(
-        blender_man_page ALL
+        brickcad_man_page ALL
         COMMAND ${CMAKE_SOURCE_DIR}/doc/manpage/blender.1.py
-                ${EXECUTABLE_OUTPUT_PATH}/blender
+                ${EXECUTABLE_OUTPUT_PATH}/brickcad
                 ${CMAKE_CURRENT_BINARY_DIR}/blender.1)
-      add_dependencies(blender_man_page blender)
+      add_dependencies(brickcad_man_page brickcad)
     endif()
   endif()
 
@@ -477,19 +477,19 @@ if(UNIX AND NOT APPLE)
   if(WITH_PYTHON_MODULE)
     if(WITH_INSTALL_PORTABLE)
       install(
-        TARGETS blender
+        TARGETS brickcad
         DESTINATION "."
       )
     else()
       install(
-        TARGETS blender
+        TARGETS brickcad
         LIBRARY DESTINATION ${PYTHON_SITE_PACKAGES}
       )
     endif()
     # none of the other files are needed currently
   elseif(WITH_INSTALL_PORTABLE)
     install(
-      TARGETS blender
+      TARGETS brickcad
       DESTINATION "."
     )
 
@@ -517,7 +517,7 @@ if(UNIX AND NOT APPLE)
   else()
     # main blender binary
     install(
-      TARGETS blender
+      TARGETS brickcad
       DESTINATION bin
     )
     if(WITH_DOC_MANPAGE)
@@ -902,14 +902,14 @@ elseif(APPLE)
     )
   endmacro()
 
-  set(OSX_APP_SOURCEDIR ${CMAKE_SOURCE_DIR}/release/darwin/blender.app)
+  set(OSX_APP_SOURCEDIR ${CMAKE_SOURCE_DIR}/release/darwin/brickcad.app)
 
   # setup Info.plist
   execute_process(COMMAND date "+%Y-%m-%d"
                   OUTPUT_VARIABLE BLENDER_DATE
                   OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-  set_target_properties(blender PROPERTIES
+  set_target_properties(brickcad PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST ${OSX_APP_SOURCEDIR}/Contents/Info.plist
     MACOSX_BUNDLE_SHORT_VERSION_STRING "${BLENDER_VERSION}${BLENDER_VERSION_CHAR}"
     MACOSX_BUNDLE_LONG_VERSION_STRING "${BLENDER_VERSION}${BLENDER_VERSION_CHAR} ${BLENDER_DATE}")
@@ -921,10 +921,10 @@ elseif(APPLE)
 
   # Give the bundle actual creation/modification date
   execute_process(COMMAND SetFile -d ${SETFILE_DATE} -m ${SETFILE_DATE}
-                  ${EXECUTABLE_OUTPUT_PATH}/blender.app)
+                  ${EXECUTABLE_OUTPUT_PATH}/brickcad.app)
 
   install(
-    TARGETS blender
+    TARGETS brickcad
     DESTINATION "."
   )
 
@@ -933,25 +933,25 @@ elseif(APPLE)
 
   install(
     FILES ${OSX_APP_SOURCEDIR}/Contents/PkgInfo
-    DESTINATION blender.app/Contents
+    DESTINATION brickcad.app/Contents
   )
 
   install_dir(
     ${OSX_APP_SOURCEDIR}/Contents/Resources
-    blender.app/Contents/
+    brickcad.app/Contents/
   )
 
   if(WITH_OPENMP AND OPENMP_CUSTOM)
     install(
       FILES ${LIBDIR}/openmp/lib/libomp.dylib
-      DESTINATION blender.app/Contents/Resources/lib
+      DESTINATION brickcad.app/Contents/Resources/lib
     )
   endif()
 
   if(WITH_LLVM AND NOT LLVM_STATIC)
     install(
       FILES ${LIBDIR}/llvm/lib/libLLVM-3.4.dylib
-      DESTINATION blender.app/Contents/MacOS
+      DESTINATION brickcad.app/Contents/MacOS
     )
   endif()
 
@@ -1049,11 +1049,11 @@ install(
 # -----------------------------------------------------------------------------
 # Setup link libs
 
-add_dependencies(blender makesdna)
-target_link_libraries(blender ${LIB})
+add_dependencies(brickcad makesdna)
+target_link_libraries(brickcad ${LIB})
 unset(LIB)
 
-setup_liblinks(blender)
+setup_liblinks(brickcad)
 
 
 # -----------------------------------------------------------------------------
@@ -1061,12 +1061,12 @@ setup_liblinks(blender)
 
 if(WIN32 AND NOT WITH_PYTHON_MODULE)
   install(
-    TARGETS blender
+    TARGETS brickcad
     COMPONENT Blender
     DESTINATION "."
   )
   set_target_properties(
-    blender
+    brickcad
     PROPERTIES
       VS_USER_PROPS "blender.Cpp.user.props"
   )

@@ -1825,7 +1825,7 @@ static bool isStartedFromCommandPrompt()
     if (getProcessName(ppid, parent_name, sizeof(parent_name))) {
       char *filename = strrchr(parent_name, '\\');
       if (filename != NULL) {
-        start_from_launcher = strstr(filename, "blender.exe") != NULL;
+        start_from_launcher = strstr(filename, "brickcad.exe") != NULL;
       }
     }
 

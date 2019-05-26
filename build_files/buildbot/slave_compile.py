@@ -31,7 +31,7 @@ if len(sys.argv) < 2:
 builder = sys.argv[1]
 
 # we run from build/ directory
-blender_dir = os.path.join('..', 'blender.git')
+blender_dir = os.path.join('..', 'brickcad.git')
 
 
 def parse_header_file(filename, define):

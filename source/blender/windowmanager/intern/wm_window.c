@@ -707,7 +707,7 @@ void wm_window_ghostwindows_ensure(wmWindowManager *wm)
         win->cursor = CURSOR_STD;
       }
 
-      wm_window_ghostwindow_add(wm, "Blender", win);
+      wm_window_ghostwindow_add(wm, "BrickCAD", win);
     }
     /* happens after fileread */
     wm_window_ensure_eventstate(win);
@@ -895,19 +895,19 @@ wmWindow *WM_window_open_temp(bContext *C, int x, int y, int sizex, int sizey, i
   }
 
   if (sa->spacetype == SPACE_IMAGE) {
-    title = IFACE_("Blender Render");
+    title = IFACE_("BrickCAD Render");
   }
   else if (ELEM(sa->spacetype, SPACE_OUTLINER, SPACE_USERPREF)) {
-    title = IFACE_("Blender Preferences");
+    title = IFACE_("BrickCAD Preferences");
   }
   else if (sa->spacetype == SPACE_FILE) {
-    title = IFACE_("Blender File View");
+    title = IFACE_("BrickCAD File View");
   }
   else if (sa->spacetype == SPACE_GRAPH) {
-    title = IFACE_("Blender Drivers Editor");
+    title = IFACE_("BrickCAD Drivers Editor");
   }
   else {
-    title = "Blender";
+    title = "BrickCAD";
   }
 
   if (win->ghostwin) {

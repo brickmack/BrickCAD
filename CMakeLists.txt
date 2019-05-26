@@ -198,7 +198,7 @@ if(UNIX AND NOT (APPLE OR HAIKU))
 endif()
 
 # Blender internal features
-option(WITH_BLENDER "Build blender (disable to build only the blender player)" ON)
+option(WITH_BLENDER "Build brickcad (disable to build only the blender player)" ON)
 mark_as_advanced(WITH_BLENDER)
 
 option(WITH_INTERNATIONAL "Enable I18N (International fonts and text)" ON)
@@ -210,7 +210,7 @@ mark_as_advanced(WITH_PYTHON_SECURITY)  # some distributions see this as a secur
 
 option(WITH_PYTHON_SAFETY "Enable internal API error checking to track invalid data to prevent crash on access (at the expense of some efficiency, only enable for development)." OFF)
 mark_as_advanced(WITH_PYTHON_SAFETY)
-option(WITH_PYTHON_MODULE "Enable building as a python module which runs without a user interface, like running regular blender in background mode (experimental, only enable for development), installs to PYTHON_SITE_PACKAGES (or CMAKE_INSTALL_PREFIX if WITH_INSTALL_PORTABLE is enabled)." OFF)
+option(WITH_PYTHON_MODULE "Enable building as a python module which runs without a user interface, like running regular brickcad in background mode (experimental, only enable for development), installs to PYTHON_SITE_PACKAGES (or CMAKE_INSTALL_PREFIX if WITH_INSTALL_PORTABLE is enabled)." OFF)
 if(APPLE)
   option(WITH_PYTHON_FRAMEWORK "Enable building using the Python available in the framework (OSX only)" OFF)
 endif()
@@ -368,14 +368,14 @@ option(WITH_INPUT_NDOF "Enable NDOF input devices (SpaceNavigator and friends)" 
 option(WITH_RAYOPTIMIZATION "Enable use of SIMD (SSE) optimizations for the raytracer" ON)
 if(UNIX AND NOT APPLE)
   option(WITH_INSTALL_PORTABLE "Install redistributeable runtime, otherwise install into CMAKE_INSTALL_PREFIX" ON)
-  option(WITH_STATIC_LIBS "Try to link with static libraries, as much as possible, to make blender more portable across distributions" OFF)
+  option(WITH_STATIC_LIBS "Try to link with static libraries, as much as possible, to make brickcad more portable across distributions" OFF)
   if(WITH_STATIC_LIBS)
     option(WITH_BOOST_ICU "Boost uses ICU library (required for linking with static Boost built with libicu)." OFF)
     mark_as_advanced(WITH_BOOST_ICU)
   endif()
 endif()
 
-option(WITH_PYTHON_INSTALL       "Copy system python into the blender install folder" ON)
+option(WITH_PYTHON_INSTALL       "Copy system python into the brickcad install folder" ON)
 if(WIN32 OR APPLE)
   # Windows and macOS have this bundled with Python libraries.
 elseif(WITH_PYTHON_INSTALL OR (WITH_AUDASPACE AND NOT WITH_SYSTEM_AUDASPACE))
@@ -385,10 +385,10 @@ elseif(WITH_PYTHON_INSTALL OR (WITH_AUDASPACE AND NOT WITH_SYSTEM_AUDASPACE))
   mark_as_advanced(PYTHON_NUMPY_INCLUDE_DIRS)
 endif()
 if(WITH_PYTHON_INSTALL)
-  option(WITH_PYTHON_INSTALL_NUMPY "Copy system numpy into the blender install folder"  ON)
+  option(WITH_PYTHON_INSTALL_NUMPY "Copy system numpy into the brickcad install folder"  ON)
 
   if(UNIX AND NOT APPLE)
-    option(WITH_PYTHON_INSTALL_REQUESTS "Copy system requests into the blender install folder" ON)
+    option(WITH_PYTHON_INSTALL_REQUESTS "Copy system requests into the brickcad install folder" ON)
     set(PYTHON_REQUESTS_PATH "" CACHE PATH "Path to python site-packages or dist-packages containing 'requests' module")
     mark_as_advanced(PYTHON_REQUESTS_PATH)
   endif()
@@ -1170,7 +1170,7 @@ if(WITH_SYSTEM_GLEW)
   # Note: There is an assumption here that the system GLEW is not a static library.
 
   if(NOT GLEW_FOUND)
-    message(FATAL_ERROR "GLEW is required to build Blender. Install it or disable WITH_SYSTEM_GLEW.")
+    message(FATAL_ERROR "GLEW is required to build BrickCAD. Install it or disable WITH_SYSTEM_GLEW.")
   endif()
 
   set(BLENDER_GLEW_LIBRARIES ${GLEW_LIBRARY})
@@ -1711,7 +1711,7 @@ include(build_files/cmake/packaging.cmake)
 #-----------------------------------------------------------------------------
 # Use dynamic loading for OpenMP
 if(WITH_BLENDER)
-  openmp_delayload(blender)
+  openmp_delayload(brickcad)
 endif()
 
 #-----------------------------------------------------------------------------

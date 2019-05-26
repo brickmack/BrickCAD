@@ -228,9 +228,9 @@ endif
 # Allow passing in own BLENDER_BIN so developers who don't
 # use the default build path can still use utility helpers.
 ifeq ($(OS), Darwin)
-	BLENDER_BIN?="$(BUILD_DIR)/bin/blender.app/Contents/MacOS/blender"
+	BLENDER_BIN?="$(BUILD_DIR)/bin/brickcad.app/Contents/MacOS/brickcad"
 else
-	BLENDER_BIN?="$(BUILD_DIR)/bin/blender"
+	BLENDER_BIN?="$(BUILD_DIR)/bin/brickcad"
 endif
 
 
@@ -285,7 +285,7 @@ all: .FORCE
 	$(MAKE) -C "$(BUILD_DIR)" -s -j $(NPROCS) install
 	@echo
 	@echo edit build configuration with: "$(BUILD_DIR)/CMakeCache.txt" run make again to rebuild.
-	@echo Blender successfully built, run from: $(BLENDER_BIN)
+	@echo BrickCAD successfully built, run from: $(BLENDER_BIN)
 	@echo
 
 debug: all

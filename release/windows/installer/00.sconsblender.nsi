@@ -65,9 +65,9 @@ UninstallIcon "[RELDIR]\00.installer.ico"
 ;Data
 
 Caption "Blender [VERSION] Installer"
-OutFile "[DISTDIR]\..\blender-[VERSION]-windows[BITNESS].exe"
+OutFile "[DISTDIR]\..\brickcad-[VERSION]-windows[BITNESS].exe"
 InstallDir $INSTDIR ; $INSTDIR is set inside .onInit
-BrandingText "Blender Foundation | http://www.blender.org"
+BrandingText "BrickCAD | http://www.blender.org"
 ComponentText "This will install Blender [VERSION] on your computer."
 
 VIAddVersionKey "ProductName" "Blender"
@@ -97,18 +97,18 @@ Function .onInit
 
   ${If} ${RunningX64}
     ${If} "[BITNESS]" == "32"
-      StrCpy $INSTDIR "$PROGRAMFILES32\Blender Foundation\Blender" ; Can't use InstallDir inside Section
+      StrCpy $INSTDIR "$PROGRAMFILES32\BrickCAD\BrickCAD" ; Can't use InstallDir inside Section
     ${ElseIf} "[BITNESS]" == "64"
-      StrCpy $INSTDIR "$PROGRAMFILES64\Blender Foundation\Blender"
+      StrCpy $INSTDIR "$PROGRAMFILES64\BrickCAD\BrickCAD"
     ${EndIf}
   ${Else}
-    StrCpy $INSTDIR "$PROGRAMFILES\Blender Foundation\Blender"
+    StrCpy $INSTDIR "$PROGRAMFILES\BrickCAD\BrickCAD"
   ${EndIf}
 FunctionEnd
 
 Function un.onInit
   SetShellVarContext current
-  StrCpy $BLENDERCONFIG "$APPDATA\Blender Foundation\Blender"
+  StrCpy $BLENDERCONFIG "$APPDATA\BrickCAD\BrickCAD"
   SetShellVarContext all
 FunctionEnd
 

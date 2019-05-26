@@ -98,8 +98,8 @@ if(WIN32)
   set(CPACK_WIX_LIGHT_EXTRA_FLAGS -dcl:high)
 endif()
 
-set(CPACK_PACKAGE_EXECUTABLES "blender" "blender")
-set(CPACK_CREATE_DESKTOP_LINKS "blender" "blender")
+set(CPACK_PACKAGE_EXECUTABLES "brickcad" "brickcad")
+set(CPACK_CREATE_DESKTOP_LINKS "brickcad" "brickcad")
 
 include(CPack)
 

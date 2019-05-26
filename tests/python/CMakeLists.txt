@@ -50,19 +50,19 @@ endif()
 # GENERAL PYTHON CORRECTNESS TESTS
 add_test(
   NAME script_load_keymap
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_keymap_completeness.py
 )
 
 add_test(
   NAME script_load_addons
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_load_addons.py
 )
 
 add_test(
   NAME script_load_modules
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_load_py_modules.py
 )
 
@@ -70,7 +70,7 @@ add_test(
 if(USE_EXPERIMENTAL_TESTS)
   add_test(
     NAME script_run_operators
-    COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+    COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
     --python ${CMAKE_CURRENT_LIST_DIR}/bl_run_operators.py
   )
 endif()
@@ -79,31 +79,31 @@ endif()
 # PY API TESTS
 add_test(
   NAME script_pyapi_bpy_path
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_pyapi_bpy_path.py
 )
 
 add_test(
   NAME script_pyapi_bpy_utils_units
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_pyapi_bpy_utils_units.py
 )
 
 add_test(
   NAME script_pyapi_mathutils
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_pyapi_mathutils.py
 )
 
 add_test(
   NAME script_pyapi_idprop
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_pyapi_idprop.py
 )
 
 add_test(
   NAME script_pyapi_idprop_datablock
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_pyapi_idprop_datablock.py
 )
 
@@ -111,21 +111,21 @@ add_test(
 # MODELING TESTS
 add_test(
   NAME bmesh_bevel
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/modeling/bevel_regression.blend
   --python-text run_tests
 )
 
 add_test(
   NAME bmesh_boolean
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/modeling/bool_regression.blend
   --python-text run_tests
 )
 
 add_test(
   NAME bmesh_split_faces
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/modeling/split_faces_test.blend
   --python-text run_tests
 )
@@ -134,7 +134,7 @@ add_test(
 # MODIFIERS TESTS
 add_test(
   NAME object_modifier_array
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/modifier_stack/array_test.blend
   --python-text run_tests
 )
@@ -147,7 +147,7 @@ add_test(
 if(FALSE)
 add_test(
   NAME import_obj_cube
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.import_scene.obj\(filepath='${TEST_SRC_DIR}/io_tests/obj/cube.obj'\)
   --md5=39cce4bacac2d1b18fc470380279bc15 --md5_method=SCENE
@@ -156,7 +156,7 @@ add_test(
 
 add_test(
   NAME import_obj_nurbs_cyclic
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.import_scene.obj\(filepath='${TEST_SRC_DIR}/io_tests/obj/nurbs_cyclic.obj'\)
   --md5=ad3c307e5883224a0492378cd32691ab --md5_method=SCENE
@@ -165,7 +165,7 @@ add_test(
 
 add_test(
   NAME import_obj_makehuman
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.import_scene.obj\(filepath='${TEST_SRC_DIR}/io_tests/obj/makehuman.obj'\)
   --md5=c9f78b185e58358daa4ecaecfa75464e --md5_method=SCENE
@@ -176,7 +176,7 @@ endif()
 # OBJ Export tests
 add_test(
   NAME export_obj_cube
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_geometry/all_quads.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_scene.obj\(filepath='${TEST_OUT_DIR}/export_obj_cube.obj',use_selection=False\)
@@ -187,7 +187,7 @@ add_test(
 
 add_test(
   NAME export_obj_nurbs
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_geometry/nurbs.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_scene.obj\(filepath='${TEST_OUT_DIR}/export_obj_nurbs.obj',use_selection=False,use_nurbs=True\)
@@ -200,7 +200,7 @@ add_test(
 if(FALSE)
 add_test(
   NAME export_obj_all_objects
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_scene/all_objects.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_scene.obj\(filepath='${TEST_OUT_DIR}/export_obj_all_objects.obj',use_selection=False,use_nurbs=True\)
@@ -215,7 +215,7 @@ endif()
 # PLY Import tests
 add_test(
   NAME import_ply_cube
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.import_mesh.ply\(filepath='${TEST_SRC_DIR}/io_tests/ply/cube_ascii.ply'\)
   --md5=527134343c27fc0ea73115b85fbfd3ac --md5_method=SCENE
@@ -224,7 +224,7 @@ add_test(
 
 add_test(
   NAME import_ply_bunny
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.import_mesh.ply\(filepath='${TEST_SRC_DIR}/io_tests/ply/bunny2.ply'\)
   --md5=6ea5b8533400a17accf928b8fd024eaa --md5_method=SCENE
@@ -233,7 +233,7 @@ add_test(
 
 add_test(
   NAME import_ply_small_holes
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.import_mesh.ply\(filepath='${TEST_SRC_DIR}/io_tests/ply/many_small_holes.ply'\)
   --md5=c3093e26ecae5b6d59fbbcf2a0d0b39f --md5_method=SCENE
@@ -245,7 +245,7 @@ add_test(
 if(FALSE)
 add_test(
   NAME export_ply_cube_all_data
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_geometry/cube_all_data.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_mesh.ply\(filepath='${TEST_OUT_DIR}/export_ply_cube_all_data.ply'\)
@@ -255,7 +255,7 @@ add_test(
 
 add_test(
   NAME export_ply_suzanne_all_data
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_geometry/suzanne_all_data.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_mesh.ply\(filepath='${TEST_OUT_DIR}/export_ply_suzanne_all_data.ply'\)
@@ -266,7 +266,7 @@ endif()
 
 add_test(
   NAME export_ply_vertices # lame, add a better one
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_geometry/vertices.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_mesh.ply\(filepath='${TEST_OUT_DIR}/export_ply_vertices.ply'\)
@@ -280,7 +280,7 @@ add_test(
 if(FALSE)
 add_test(
   NAME import_stl_cube
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.import_mesh.stl\(filepath='${TEST_SRC_DIR}/io_tests/stl/cube.stl'\)
   --md5=8ceb5bb7e1cb5f4342fa1669988c66b4 --md5_method=SCENE
@@ -289,7 +289,7 @@ add_test(
 
 add_test(
   NAME import_stl_conrod
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.import_mesh.stl\(filepath='${TEST_SRC_DIR}/io_tests/stl/conrod.stl'\)
   --md5=690a4b8eb9002dcd8631c5a575ea7348 --md5_method=SCENE
@@ -298,7 +298,7 @@ add_test(
 
 add_test(
   NAME import_stl_knot_max_simplified
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.import_mesh.stl\(filepath='${TEST_SRC_DIR}/io_tests/stl/knot_max_simplified.stl'\)
   --md5=baf82803f45a84ec4ddbad9cef57dd3e --md5_method=SCENE
@@ -311,7 +311,7 @@ endif()
 if(FALSE)
 add_test(
   NAME export_stl_cube_all_data
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_geometry/cube_all_data.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_mesh.stl\(filepath='${TEST_OUT_DIR}/export_stl_cube_all_data.stl'\)
@@ -321,7 +321,7 @@ add_test(
 
 add_test(
   NAME export_stl_suzanne_all_data
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_geometry/suzanne_all_data.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_mesh.stl\(filepath='${TEST_OUT_DIR}/export_stl_suzanne_all_data.stl'\)
@@ -331,7 +331,7 @@ add_test(
 
 add_test(
   NAME export_stl_vertices # lame, add a better one
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_geometry/vertices.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_mesh.stl\(filepath='${TEST_OUT_DIR}/export_stl_vertices.stl'\)
@@ -346,7 +346,7 @@ endif()
 if(FALSE)
 add_test(
   NAME import_x3d_cube
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.import_scene.x3d\(filepath='${TEST_SRC_DIR}/io_tests/x3d/color_cube.x3d'\)
   --md5=3fae9be004199c145941cd3f9f80ad7b --md5_method=SCENE
@@ -355,7 +355,7 @@ add_test(
 
 add_test(
   NAME import_x3d_teapot
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.import_scene.x3d\(filepath='${TEST_SRC_DIR}/io_tests/x3d/teapot.x3d'\)
   --md5=8ee196c71947dce4199d55698501691e --md5_method=SCENE
@@ -364,7 +364,7 @@ add_test(
 
 add_test(
   NAME import_x3d_suzanne_material
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.import_scene.x3d\(filepath='${TEST_SRC_DIR}/io_tests/x3d/suzanne_material.x3d'\)
   --md5=3edea1353257d8b5a5f071942f417be6 --md5_method=SCENE
@@ -374,7 +374,7 @@ add_test(
 # X3D Export
 add_test(
   NAME export_x3d_cube
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_geometry/all_quads.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_scene.x3d\(filepath='${TEST_OUT_DIR}/export_x3d_cube.x3d',use_selection=False\)
@@ -384,7 +384,7 @@ add_test(
 
 add_test(
   NAME export_x3d_nurbs
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_geometry/nurbs.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_scene.x3d\(filepath='${TEST_OUT_DIR}/export_x3d_nurbs.x3d',use_selection=False\)
@@ -394,7 +394,7 @@ add_test(
 
 add_test(
   NAME export_x3d_all_objects
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_scene/all_objects.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_scene.x3d\(filepath='${TEST_OUT_DIR}/export_x3d_all_objects.x3d',use_selection=False\)
@@ -410,7 +410,7 @@ endif()
 if(FALSE)
 add_test(
   NAME import_3ds_cube
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.import_scene.autodesk_3ds\(filepath='${TEST_SRC_DIR}/io_tests/3ds/cube.3ds'\)
   --md5=cb5a45c35a343c3f5beca2a918472951 --md5_method=SCENE
@@ -419,7 +419,7 @@ add_test(
 
 add_test(
   NAME import_3ds_hierarchy_lara
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.import_scene.autodesk_3ds\(filepath='${TEST_SRC_DIR}/io_tests/3ds/hierarchy_lara.3ds'\)
   --md5=766c873d9fdb5f190e43796cfbae63b6 --md5_method=SCENE
@@ -428,7 +428,7 @@ add_test(
 
 add_test(
   NAME import_3ds_hierarchy_greek_trireme
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.import_scene.autodesk_3ds\(filepath='${TEST_SRC_DIR}/io_tests/3ds/hierarchy_greek_trireme.3ds'\)
   --md5=b62ee30101e8999cb91ef4f8a8760056 --md5_method=SCENE
@@ -441,7 +441,7 @@ endif()
 if(FALSE)
 add_test(
   NAME export_3ds_cube
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_geometry/all_quads.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_scene.autodesk_3ds\(filepath='${TEST_OUT_DIR}/export_3ds_cube.3ds',use_selection=False\)
@@ -451,7 +451,7 @@ add_test(
 
 add_test(
   NAME export_3ds_nurbs
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_geometry/nurbs.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_scene.autodesk_3ds\(filepath='${TEST_OUT_DIR}/export_3ds_nurbs.3ds',use_selection=False\)
@@ -461,7 +461,7 @@ add_test(
 
 add_test(
   NAME export_3ds_all_objects
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_scene/all_objects.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_scene.autodesk_3ds\(filepath='${TEST_OUT_DIR}/export_3ds_all_objects.3ds',use_selection=False\)
@@ -478,7 +478,7 @@ endif()
 if(FALSE)
 add_test(
   NAME export_fbx_cube
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_geometry/all_quads.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_scene.fbx\(filepath='${TEST_OUT_DIR}/export_fbx_cube.fbx',use_selection=False,use_metadata=False\)
@@ -488,7 +488,7 @@ add_test(
 
 add_test(
   NAME export_fbx_nurbs
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_geometry/nurbs.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_scene.fbx\(filepath='${TEST_OUT_DIR}/export_fbx_nurbs.fbx',use_selection=False,use_metadata=False\)
@@ -498,7 +498,7 @@ add_test(
 
 add_test(
   NAME export_fbx_all_objects
-  COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+  COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
   ${TEST_SRC_DIR}/io_tests/blend_scene/all_objects.blend
   --python ${CMAKE_CURRENT_LIST_DIR}/bl_test.py --
   --run={'FINISHED'}&bpy.ops.export_scene.fbx\(filepath='${TEST_OUT_DIR}/export_fbx_all_objects.fbx',use_selection=False,use_metadata=False\)
@@ -535,7 +535,7 @@ if(WITH_CYCLES OR WITH_OPENGL_RENDER_TESTS)
         add_python_test(
           cycles_${subject}
           ${CMAKE_CURRENT_LIST_DIR}/cycles_render_tests.py
-          -blender "$<TARGET_FILE:blender>"
+          -blender "$<TARGET_FILE:brickcad>"
           -testdir "${TEST_SRC_DIR}/render/${subject}"
           -idiff "${OPENIMAGEIO_IDIFF}"
           -outdir "${TEST_OUT_DIR}/cycles"
@@ -546,7 +546,7 @@ if(WITH_CYCLES OR WITH_OPENGL_RENDER_TESTS)
         add_python_test(
           eevee_${subject}_test
           ${CMAKE_CURRENT_LIST_DIR}/eevee_render_tests.py
-          -blender "$<TARGET_FILE:blender>"
+          -blender "$<TARGET_FILE:brickcad>"
           -testdir "${TEST_SRC_DIR}/render/${subject}"
           -idiff "${OPENIMAGEIO_IDIFF}"
           -outdir "${TEST_OUT_DIR}/eevee"
@@ -555,7 +555,7 @@ if(WITH_CYCLES OR WITH_OPENGL_RENDER_TESTS)
         add_python_test(
           workbench_${subject}_test
           ${CMAKE_CURRENT_LIST_DIR}/workbench_render_tests.py
-          -blender "$<TARGET_FILE:blender>"
+          -blender "$<TARGET_FILE:brickcad>"
           -testdir "${TEST_SRC_DIR}/render/${subject}"
           -idiff "${OPENIMAGEIO_IDIFF}"
           -outdir "${TEST_OUT_DIR}/workbench"
@@ -602,7 +602,7 @@ if(WITH_OPENGL_DRAW_TESTS)
           add_python_test(
             opengl_draw_${child}
             ${CMAKE_CURRENT_LIST_DIR}/opengl_draw_tests.py
-            -blender "$<TARGET_FILE:blender>"
+            -blender "$<TARGET_FILE:brickcad>"
             -testdir "${child_path}"
             -idiff "${OPENIMAGEIO_IDIFF}"
             -outdir "${TEST_OUT_DIR}/opengl_draw"
@@ -625,14 +625,14 @@ if(WITH_ALEMBIC)
   add_python_test(
     alembic_tests
     ${CMAKE_CURRENT_LIST_DIR}/alembic_tests.py
-    --blender "$<TARGET_FILE:blender>"
+    --blender "$<TARGET_FILE:brickcad>"
     --testdir "${TEST_SRC_DIR}/alembic"
     --alembic-root "${ALEMBIC_ROOT_DIR}"
   )
 
   add_test(
     NAME script_alembic_import
-    COMMAND "$<TARGET_FILE:blender>" ${TEST_BLENDER_EXE_PARAMS}
+    COMMAND "$<TARGET_FILE:brickcad>" ${TEST_BLENDER_EXE_PARAMS}
     --python ${CMAKE_CURRENT_LIST_DIR}/bl_alembic_import_test.py
     --
     --testdir "${TEST_SRC_DIR}/alembic"
@@ -643,7 +643,7 @@ if(WITH_CODEC_FFMPEG)
   add_python_test(
     ffmpeg
     ${CMAKE_CURRENT_LIST_DIR}/ffmpeg_tests.py
-    --blender "$<TARGET_FILE:blender>"
+    --blender "$<TARGET_FILE:brickcad>"
     --testdir "${TEST_DATA_SRC_DIR}/ffmpeg"
   )
 endif()

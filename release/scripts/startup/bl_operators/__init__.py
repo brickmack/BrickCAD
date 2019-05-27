@@ -25,7 +25,6 @@ if "bpy" in locals():
     del reload
 
 _modules = [
-    "add_mesh_torus",
     "anim",
     "clip",
     "console",
@@ -50,6 +49,7 @@ _modules = [
     "vertexpaint_dirt",
     "view3d",
     "wm",
+    "brickTools",
 ]
 
 import bpy

@@ -55,10 +55,6 @@ class SelectByColorOP(bpy.types.Operator):
 			brickMat = brick.material_slots[0].name
 			if brickMat not in selectedColors:
 				selectedColors.append(brickMat)
-		
-		print()
-		for material in selectedColors:
-			print(material)
 
 		#now select all other objects with that material
 		for obj in context.scene.objects:
@@ -110,12 +106,13 @@ class SelectByMouldAndColorOP(bpy.types.Operator):
 				mouldColorPairs.append(newPair)
 			
 		for brick in context.scene.objects:
-			mouldName = brick.name.split(".")[0]
-			brickMat = brick.material_slots[0].name
-			thisPair = [mouldName, brickMat]
+			if brick.type != "EMPTY":
+				mouldName = brick.name.split(".")[0]
+				brickMat = brick.material_slots[0].name
+				thisPair = [mouldName, brickMat]
 			
-			if thisPair in mouldColorPairs:
-				brick.select_set(state=True)
+				if thisPair in mouldColorPairs:
+					brick.select_set(state=True)
 			
 		return {'FINISHED'}
 
@@ -160,15 +157,3 @@ class Brick:
 		return False
 
 classes = [SelectConnectedOP, SelectByColorOP, SelectByMouldOP, SelectByMouldAndColorOP]
-
-def register():
-	from bpy.utils import register_class
-
-	for cls in classes:
-		register_class(cls)
-
-def unregister():
-	from bpy.utils import unregister_class
-
-	for cls in classes:
-		unregister_class(cls)

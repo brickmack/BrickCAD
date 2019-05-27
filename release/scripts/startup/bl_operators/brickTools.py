@@ -1,5 +1,14 @@
 import bpy
 
+def selectWithChildren(context):
+	selected = context.selected_objects
+
+	for brick in selected:
+		for child in brick.children:
+			child.select_set(state=True)
+
+	return
+
 class SelectConnectedOP(bpy.types.Operator):
 	bl_idname = "object.select_connected"
 	bl_label = "Select connected"
@@ -116,6 +125,36 @@ class SelectByMouldAndColorOP(bpy.types.Operator):
 			
 		return {'FINISHED'}
 
+class SelectBrickOP(bpy.types.Operator):
+	#temporary tool for testing, will eventually replace the default selection feature
+	bl_idname = "object.select_brick"
+	bl_label = "Select brick"
+
+	@classmethod
+	def poll(cls, context):
+		return context.selected_objects is not None
+
+	def execute(self, context):
+		selectWithChildren(context)
+
+		return {'FINISHED'}
+
+class DeleteBrickOP(bpy.types.Operator):
+	#temporary tool for testing, will eventually replace the default deletion feature
+	bl_idname = "object.delete_brick"
+	bl_label = "Delete brick"
+
+	@classmethod
+	def poll(cls, context):
+		return context.selected_objects is not None
+
+	def execute(self, context):
+		selectWithChildren(context)
+
+		bpy.ops.object.delete()
+
+		return {'FINISHED'}
+
 class Brick:
 	#we use this to maintain a linked web of all brick-to-brick connections. Lots of stuff to optimize here, and it only works for stud-hole connections at the moment
 	def __init__(self, brick):
@@ -156,4 +195,4 @@ class Brick:
 
 		return False
 
-classes = [SelectConnectedOP, SelectByColorOP, SelectByMouldOP, SelectByMouldAndColorOP]
+classes = [SelectConnectedOP, SelectByColorOP, SelectByMouldOP, SelectByMouldAndColorOP, SelectBrickOP, DeleteBrickOP]

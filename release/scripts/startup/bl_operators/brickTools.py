@@ -1,14 +1,3 @@
-bl_info = {
-	"name": "Brick tools",
-	"author": "Mackenzie Crawford",
-	"version": (1, 0, 0),
-	"blender": (2, 80, 0),
-	"location": "View3D > Object",
-	"description": "",
-	"warning": "",
-	"tracker_url": "",
-"category": "3D View"}
-
 import bpy
 
 class SelectConnectedOP(bpy.types.Operator):

@@ -79,7 +79,6 @@ const EnumPropertyItem rna_enum_space_type_items[] = {
      ICON_NODETREE,
      "Node Editor",
      "Editor for node-based shading and compositing tools"},
-    {SPACE_SEQ, "SEQUENCE_EDITOR", ICON_SEQUENCE, "Video Sequencer", "Video editing tools"},
     {SPACE_CLIP, "CLIP_EDITOR", ICON_TRACKER, "Movie Clip Editor", "Motion tracking tools"},
 
     /* Animation */
@@ -467,7 +466,6 @@ const EnumPropertyItem rna_enum_file_sort_items[] = {
 #  include "ED_transform.h"
 #  include "ED_screen.h"
 #  include "ED_view3d.h"
-#  include "ED_sequencer.h"
 #  include "ED_clip.h"
 
 #  include "GPU_material.h"
@@ -496,8 +494,6 @@ static StructRNA *rna_Space_refine(struct PointerRNA *ptr)
       return &RNA_SpaceImageEditor;
     case SPACE_INFO:
       return &RNA_SpaceInfo;
-    case SPACE_SEQ:
-      return &RNA_SpaceSequenceEditor;
     case SPACE_TEXT:
       return &RNA_SpaceTextEditor;
     case SPACE_ACTION:
@@ -1951,14 +1947,6 @@ static void rna_SpaceConsole_rect_update(Main *UNUSED(bmain),
 {
   SpaceConsole *sc = ptr->data;
   WM_main_add_notifier(NC_SPACE | ND_SPACE_CONSOLE | NA_EDITED, sc);
-}
-
-static void rna_Sequencer_view_type_update(Main *UNUSED(bmain),
-                                           Scene *UNUSED(scene),
-                                           PointerRNA *ptr)
-{
-  ScrArea *sa = rna_area_from_space(ptr);
-  ED_area_tag_refresh(sa);
 }
 
 /* Space Node Editor */
@@ -4323,216 +4311,6 @@ static void rna_def_space_image(BlenderRNA *brna)
   rna_def_space_mask_info(srna, NC_SPACE | ND_SPACE_IMAGE, "rna_SpaceImageEditor_mask_set");
 }
 
-static void rna_def_space_sequencer(BlenderRNA *brna)
-{
-  StructRNA *srna;
-  PropertyRNA *prop;
-
-  static const EnumPropertyItem view_type_items[] = {
-      {SEQ_VIEW_SEQUENCE, "SEQUENCER", ICON_SEQ_SEQUENCER, "Sequencer", ""},
-      {SEQ_VIEW_PREVIEW, "PREVIEW", ICON_SEQ_PREVIEW, "Preview", ""},
-      {SEQ_VIEW_SEQUENCE_PREVIEW,
-       "SEQUENCER_PREVIEW",
-       ICON_SEQ_SPLITVIEW,
-       "Sequencer/Preview",
-       ""},
-      {0, NULL, 0, NULL, NULL},
-  };
-
-  static const EnumPropertyItem display_mode_items[] = {
-      {SEQ_DRAW_IMG_IMBUF, "IMAGE", ICON_SEQ_PREVIEW, "Image Preview", ""},
-      {SEQ_DRAW_IMG_WAVEFORM, "WAVEFORM", ICON_SEQ_LUMA_WAVEFORM, "Luma Waveform", ""},
-      {SEQ_DRAW_IMG_VECTORSCOPE, "VECTOR_SCOPE", ICON_SEQ_CHROMA_SCOPE, "Chroma Vectorscope", ""},
-      {SEQ_DRAW_IMG_HISTOGRAM, "HISTOGRAM", ICON_SEQ_HISTOGRAM, "Histogram", ""},
-      {0, NULL, 0, NULL, NULL},
-  };
-
-  static const EnumPropertyItem proxy_render_size_items[] = {
-      {SEQ_PROXY_RENDER_SIZE_NONE, "NONE", 0, "No display", ""},
-      {SEQ_PROXY_RENDER_SIZE_SCENE, "SCENE", 0, "Scene render size", ""},
-      {SEQ_PROXY_RENDER_SIZE_25, "PROXY_25", 0, "Proxy size 25%", ""},
-      {SEQ_PROXY_RENDER_SIZE_50, "PROXY_50", 0, "Proxy size 50%", ""},
-      {SEQ_PROXY_RENDER_SIZE_75, "PROXY_75", 0, "Proxy size 75%", ""},
-      {SEQ_PROXY_RENDER_SIZE_100, "PROXY_100", 0, "Proxy size 100%", ""},
-      {SEQ_PROXY_RENDER_SIZE_FULL, "FULL", 0, "No proxy, full render", ""},
-      {0, NULL, 0, NULL, NULL},
-  };
-
-  static const EnumPropertyItem overlay_type_items[] = {
-      {SEQ_DRAW_OVERLAY_RECT, "RECTANGLE", 0, "Rectangle", "Show rectangle area overlay"},
-      {SEQ_DRAW_OVERLAY_REFERENCE, "REFERENCE", 0, "Reference", "Show reference frame only"},
-      {SEQ_DRAW_OVERLAY_CURRENT, "CURRENT", 0, "Current", "Show current frame only"},
-      {0, NULL, 0, NULL, NULL},
-  };
-
-  static const EnumPropertyItem preview_channels_items[] = {
-      {SEQ_USE_ALPHA,
-       "COLOR_ALPHA",
-       ICON_IMAGE_RGB_ALPHA,
-       "Color and Alpha",
-       "Display image with RGB colors and alpha transparency"},
-      {0, "COLOR", ICON_IMAGE_RGB, "Color", "Display image with RGB colors"},
-      {0, NULL, 0, NULL, NULL},
-  };
-
-  static const EnumPropertyItem waveform_type_display_items[] = {
-      {SEQ_NO_WAVEFORMS,
-       "NO_WAVEFORMS",
-       0,
-       "Waveforms Off",
-       "No waveforms drawn for any sound strips"},
-      {SEQ_ALL_WAVEFORMS,
-       "ALL_WAVEFORMS",
-       0,
-       "Waveforms On",
-       "Waveforms drawn for all sound strips"},
-      {0,
-       "DEFAULT_WAVEFORMS",
-       0,
-       "Use Strip Option",
-       "Waveforms drawn according to strip setting"},
-      {0, NULL, 0, NULL, NULL},
-  };
-
-  srna = RNA_def_struct(brna, "SpaceSequenceEditor", "Space");
-  RNA_def_struct_sdna(srna, "SpaceSeq");
-  RNA_def_struct_ui_text(srna, "Space Sequence Editor", "Sequence editor space data");
-
-  rna_def_space_generic_show_region_toggles(srna, (1 << RGN_TYPE_UI));
-
-  /* view type, fairly important */
-  prop = RNA_def_property(srna, "view_type", PROP_ENUM, PROP_NONE);
-  RNA_def_property_enum_sdna(prop, NULL, "view");
-  RNA_def_property_enum_items(prop, view_type_items);
-  RNA_def_property_ui_text(
-      prop, "View Type", "Type of the Sequencer view (sequencer, preview or both)");
-  RNA_def_property_update(prop, 0, "rna_Sequencer_view_type_update");
-
-  /* display type, fairly important */
-  prop = RNA_def_property(srna, "display_mode", PROP_ENUM, PROP_NONE);
-  RNA_def_property_enum_sdna(prop, NULL, "mainb");
-  RNA_def_property_enum_items(prop, display_mode_items);
-  RNA_def_property_ui_text(
-      prop, "Display Mode", "View mode to use for displaying sequencer output");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  /* flags */
-  prop = RNA_def_property(srna, "show_frame_indicator", PROP_BOOLEAN, PROP_NONE);
-  RNA_def_property_boolean_negative_sdna(prop, NULL, "flag", SEQ_NO_DRAW_CFRANUM);
-  RNA_def_property_ui_text(prop,
-                           "Show Frame Number Indicator",
-                           "Show frame number beside the current frame indicator line");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "show_frames", PROP_BOOLEAN, PROP_NONE);
-  RNA_def_property_boolean_sdna(prop, NULL, "flag", SEQ_DRAWFRAMES);
-  RNA_def_property_ui_text(prop, "Display Frames", "Display frames rather than seconds");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "use_marker_sync", PROP_BOOLEAN, PROP_NONE);
-  RNA_def_property_boolean_sdna(prop, NULL, "flag", SEQ_MARKER_TRANS);
-  RNA_def_property_ui_text(prop, "Sync Markers", "Transform markers as well as strips");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "show_separate_color", PROP_BOOLEAN, PROP_NONE);
-  RNA_def_property_boolean_sdna(prop, NULL, "flag", SEQ_DRAW_COLOR_SEPARATED);
-  RNA_def_property_ui_text(prop, "Separate Colors", "Separate color channels in preview");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "show_safe_areas", PROP_BOOLEAN, PROP_NONE);
-  RNA_def_property_boolean_sdna(prop, NULL, "flag", SEQ_SHOW_SAFE_MARGINS);
-  RNA_def_property_ui_text(
-      prop, "Safe Areas", "Show TV title safe and action safe areas in preview");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "show_safe_center", PROP_BOOLEAN, PROP_NONE);
-  RNA_def_property_boolean_sdna(prop, NULL, "flag", SEQ_SHOW_SAFE_CENTER);
-  RNA_def_property_ui_text(
-      prop, "Center-Cut Safe Areas", "Show safe areas to fit content in a different aspect ratio");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "show_metadata", PROP_BOOLEAN, PROP_NONE);
-  RNA_def_property_boolean_sdna(prop, NULL, "flag", SEQ_SHOW_METADATA);
-  RNA_def_property_ui_text(prop, "Show Metadata", "Show metadata of first visible strip");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "show_seconds", PROP_BOOLEAN, PROP_NONE);
-  RNA_def_property_boolean_negative_sdna(prop, NULL, "flag", SEQ_DRAWFRAMES);
-  RNA_def_property_ui_text(prop, "Show Seconds", "Show timing in seconds not frames");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "show_marker_lines", PROP_BOOLEAN, PROP_NONE);
-  RNA_def_property_boolean_sdna(prop, NULL, "flag", SEQ_SHOW_MARKER_LINES);
-  RNA_def_property_ui_text(prop, "Show Marker Lines", "Show a vertical line for every marker");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "show_annotation", PROP_BOOLEAN, PROP_NONE);
-  RNA_def_property_boolean_sdna(prop, NULL, "flag", SEQ_SHOW_GPENCIL);
-  RNA_def_property_ui_text(prop, "Show Annotation", "Show annotations for this view");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "display_channel", PROP_INT, PROP_NONE);
-  RNA_def_property_int_sdna(prop, NULL, "chanshown");
-  RNA_def_property_ui_text(
-      prop,
-      "Display Channel",
-      "The channel number shown in the image preview. 0 is the result of all strips combined");
-  RNA_def_property_range(prop, -5, MAXSEQ);
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "preview_channels", PROP_ENUM, PROP_NONE);
-  RNA_def_property_enum_bitflag_sdna(prop, NULL, "flag");
-  RNA_def_property_enum_items(prop, preview_channels_items);
-  RNA_def_property_ui_text(prop, "Display Channels", "Channels of the preview to draw");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "waveform_display_type", PROP_ENUM, PROP_NONE);
-  RNA_def_property_enum_bitflag_sdna(prop, NULL, "flag");
-  RNA_def_property_enum_items(prop, waveform_type_display_items);
-  RNA_def_property_ui_text(prop, "Waveform Displaying", "How Waveforms are drawn");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "show_overexposed", PROP_INT, PROP_NONE);
-  RNA_def_property_int_sdna(prop, NULL, "zebra");
-  RNA_def_property_ui_text(prop, "Show Overexposed", "Show overexposed areas with zebra stripes");
-  RNA_def_property_range(prop, 0, 110);
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "proxy_render_size", PROP_ENUM, PROP_NONE);
-  RNA_def_property_enum_sdna(prop, NULL, "render_size");
-  RNA_def_property_enum_items(prop, proxy_render_size_items);
-  RNA_def_property_ui_text(prop,
-                           "Proxy Render Size",
-                           "Display preview using full resolution or different proxy resolutions");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  /* grease pencil */
-  prop = RNA_def_property(srna, "grease_pencil", PROP_POINTER, PROP_NONE);
-  RNA_def_property_pointer_sdna(prop, NULL, "gpd");
-  RNA_def_property_struct_type(prop, "GreasePencil");
-  RNA_def_property_pointer_funcs(
-      prop, NULL, NULL, NULL, "rna_GPencil_datablocks_annotations_poll");
-  RNA_def_property_flag(prop, PROP_EDITABLE | PROP_ID_REFCOUNT);
-  RNA_def_property_ui_text(prop, "Grease Pencil", "Grease Pencil data for this Preview region");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "overlay_type", PROP_ENUM, PROP_NONE);
-  RNA_def_property_enum_sdna(prop, NULL, "overlay_type");
-  RNA_def_property_enum_items(prop, overlay_type_items);
-  RNA_def_property_ui_text(prop, "Overlay Type", "Overlay draw type");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "show_backdrop", PROP_BOOLEAN, PROP_NONE);
-  RNA_def_property_boolean_sdna(prop, NULL, "draw_flag", SEQ_DRAW_BACKDROP);
-  RNA_def_property_ui_text(prop, "Use Backdrop", "Display result under strips");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-
-  prop = RNA_def_property(srna, "show_strip_offset", PROP_BOOLEAN, PROP_NONE);
-  RNA_def_property_boolean_sdna(prop, NULL, "draw_flag", SEQ_DRAW_OFFSET_EXT);
-  RNA_def_property_ui_text(prop, "Show Offsets", "Display strip in/out offsets");
-  RNA_def_property_update(prop, NC_SPACE | ND_SPACE_SEQUENCER, NULL);
-}
-
 static void rna_def_space_text(BlenderRNA *brna)
 {
   StructRNA *srna;
@@ -6213,7 +5991,6 @@ void RNA_def_space(BlenderRNA *brna)
 {
   rna_def_space(brna);
   rna_def_space_image(brna);
-  rna_def_space_sequencer(brna);
   rna_def_space_text(brna);
   rna_def_fileselect_params(brna);
   rna_def_filemenu_entry(brna);

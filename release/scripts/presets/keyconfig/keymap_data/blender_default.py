@@ -370,7 +370,6 @@ def km_window(params):
                 ('F5', 'VIEW_3D'),
                 ('F6', 'GRAPH_EDITOR'),
                 ('F7', 'PROPERTIES'),
-                ('F8', 'SEQUENCE_EDITOR'),
                 ('F9', 'OUTLINER'),
                 ('F10', 'IMAGE_EDITOR'),
                 ('F11', 'TEXT_EDITOR'),
@@ -2245,159 +2244,6 @@ def km_text(params):
         ("text.autocomplete", {"type": 'SPACE', "value": 'PRESS', "ctrl": True}, None),
         ("text.line_number", {"type": 'TEXTINPUT', "value": 'ANY', "any": True}, None),
         ("text.insert", {"type": 'TEXTINPUT', "value": 'ANY', "any": True}, None),
-    ])
-
-    return keymap
-
-
-def km_sequencercommon(_params):
-    items = []
-    keymap = (
-        "SequencerCommon",
-        {"space_type": 'SEQUENCE_EDITOR', "region_type": 'WINDOW'},
-        {"items": items},
-    )
-
-    items.extend([
-        *_template_space_region_type_toggle(
-            sidebar_key={"type": 'N', "value": 'PRESS'},
-        ),
-        ("wm.context_toggle", {"type": 'O', "value": 'PRESS', "shift": True},
-         {"properties": [("data_path", 'scene.sequence_editor.show_overlay')]}),
-        ("sequencer.view_toggle", {"type": 'TAB', "value": 'PRESS', "ctrl": True}, None),
-    ])
-
-    return keymap
-
-
-def km_sequencer(params):
-    items = []
-    keymap = (
-        "Sequencer",
-        {"space_type": 'SEQUENCE_EDITOR', "region_type": 'WINDOW'},
-        {"items": items},
-    )
-
-    items.extend([
-        *_template_items_select_actions(params, "sequencer.select_all"),
-        ("sequencer.cut", {"type": 'K', "value": 'PRESS'},
-         {"properties": [("type", 'SOFT')]}),
-        ("sequencer.cut", {"type": 'K', "value": 'PRESS', "shift": True},
-         {"properties": [("type", 'HARD')]}),
-        ("sequencer.mute", {"type": 'H', "value": 'PRESS'},
-         {"properties": [("unselected", False)]}),
-        ("sequencer.mute", {"type": 'H', "value": 'PRESS', "shift": True},
-         {"properties": [("unselected", True)]}),
-        ("sequencer.unmute", {"type": 'H', "value": 'PRESS', "alt": True},
-         {"properties": [("unselected", False)]}),
-        ("sequencer.unmute", {"type": 'H', "value": 'PRESS', "shift": True, "alt": True},
-         {"properties": [("unselected", True)]}),
-        ("sequencer.lock", {"type": 'L', "value": 'PRESS', "shift": True}, None),
-        ("sequencer.unlock", {"type": 'L', "value": 'PRESS', "shift": True, "alt": True}, None),
-        ("sequencer.reassign_inputs", {"type": 'R', "value": 'PRESS'}, None),
-        ("sequencer.reload", {"type": 'R', "value": 'PRESS', "alt": True}, None),
-        ("sequencer.reload", {"type": 'R', "value": 'PRESS', "shift": True, "alt": True},
-         {"properties": [("adjust_length", True)]}),
-        ("sequencer.offset_clear", {"type": 'O', "value": 'PRESS', "alt": True}, None),
-        ("sequencer.duplicate_move", {"type": 'D', "value": 'PRESS', "shift": True}, None),
-        ("sequencer.delete", {"type": 'X', "value": 'PRESS'}, None),
-        ("sequencer.delete", {"type": 'DEL', "value": 'PRESS'}, None),
-        ("sequencer.copy", {"type": 'C', "value": 'PRESS', "ctrl": True}, None),
-        ("sequencer.paste", {"type": 'V', "value": 'PRESS', "ctrl": True}, None),
-        ("sequencer.images_separate", {"type": 'Y', "value": 'PRESS'}, None),
-        ("sequencer.meta_toggle", {"type": 'TAB', "value": 'PRESS'}, None),
-        ("sequencer.meta_make", {"type": 'G', "value": 'PRESS', "ctrl": True}, None),
-        ("sequencer.meta_separate", {"type": 'G', "value": 'PRESS', "ctrl": True, "alt": True}, None),
-        ("sequencer.view_all", {"type": 'HOME', "value": 'PRESS'}, None),
-        ("sequencer.view_all", {"type": 'NDOF_BUTTON_FIT', "value": 'PRESS'}, None),
-        ("sequencer.view_selected", {"type": 'NUMPAD_PERIOD', "value": 'PRESS'}, None),
-        ("sequencer.view_frame", {"type": 'NUMPAD_0', "value": 'PRESS'}, None),
-        ("sequencer.strip_jump", {"type": 'PAGE_UP', "value": 'PRESS'},
-         {"properties": [("next", True), ("center", False)]}),
-        ("sequencer.strip_jump", {"type": 'PAGE_DOWN', "value": 'PRESS'},
-         {"properties": [("next", False), ("center", False)]}),
-        ("sequencer.strip_jump", {"type": 'PAGE_UP', "value": 'PRESS', "alt": True},
-         {"properties": [("next", True), ("center", True)]}),
-        ("sequencer.strip_jump", {"type": 'PAGE_DOWN', "value": 'PRESS', "alt": True},
-         {"properties": [("next", False), ("center", True)]}),
-        ("sequencer.swap", {"type": 'LEFT_ARROW', "value": 'PRESS', "alt": True},
-         {"properties": [("side", 'LEFT')]}),
-        ("sequencer.swap", {"type": 'RIGHT_ARROW', "value": 'PRESS', "alt": True},
-         {"properties": [("side", 'RIGHT')]}),
-        ("sequencer.gap_remove", {"type": 'BACK_SPACE', "value": 'PRESS'},
-         {"properties": [("all", False)]}),
-        ("sequencer.gap_remove", {"type": 'BACK_SPACE', "value": 'PRESS', "shift": True},
-         {"properties": [("all", True)]}),
-        ("sequencer.gap_insert", {"type": 'EQUAL', "value": 'PRESS', "shift": True}, None),
-        ("sequencer.snap", {"type": 'S', "value": 'PRESS', "shift": True}, None),
-        ("sequencer.swap_inputs", {"type": 'S', "value": 'PRESS', "alt": True}, None),
-        *(
-            (("sequencer.cut_multicam",
-              {"type": NUMBERS_1[i], "value": 'PRESS'},
-              {"properties": [("camera", i + 1)]})
-             for i in range(10)
-             )
-        ),
-        ("sequencer.select", {"type": params.select_mouse, "value": 'PRESS'},
-         {"properties": [("extend", False), ("deselect_all", True),
-                         ("linked_handle", False), ("left_right", 'NONE'), ("linked_time", False)]}),
-        ("sequencer.select", {"type": params.select_mouse, "value": 'CLICK', "shift": True},
-         {"properties": [("extend", True), ("linked_handle", False), ("left_right", 'NONE'), ("linked_time", False)]}),
-        ("sequencer.select", {"type": params.select_mouse, "value": 'PRESS', "alt": True},
-         {"properties": [("extend", False), ("linked_handle", True), ("left_right", 'NONE'), ("linked_time", False)]}),
-        ("sequencer.select", {"type": params.select_mouse, "value": 'PRESS', "shift": True, "alt": True},
-         {"properties": [("extend", True), ("linked_handle", True), ("left_right", 'NONE'), ("linked_time", False)]}),
-        ("sequencer.select", {"type": params.select_mouse, "value": 'PRESS', "ctrl": True},
-         {"properties": [("extend", False), ("linked_handle", False), ("left_right", 'MOUSE'), ("linked_time", True)]}),
-        ("sequencer.select", {"type": params.select_mouse, "value": 'PRESS', "shift": True, "ctrl": True},
-         {"properties": [("extend", True), ("linked_handle", False), ("left_right", 'NONE'), ("linked_time", True)]}),
-        ("sequencer.select_more", {"type": 'NUMPAD_PLUS', "value": 'PRESS', "ctrl": True}, None),
-        ("sequencer.select_less", {"type": 'NUMPAD_MINUS', "value": 'PRESS', "ctrl": True}, None),
-        ("sequencer.select_linked_pick", {"type": 'L', "value": 'PRESS'},
-         {"properties": [("extend", False)]}),
-        ("sequencer.select_linked_pick", {"type": 'L', "value": 'PRESS', "shift": True},
-         {"properties": [("extend", True)]}),
-        ("sequencer.select_linked", {"type": 'L', "value": 'PRESS', "ctrl": True}, None),
-        ("sequencer.select_box", {"type": 'B', "value": 'PRESS'}, None),
-        ("sequencer.select_box", {"type": params.select_tweak, "value": 'ANY'},
-         {"properties":[("wait_for_input", False), ("mode", 'SET')]}),
-        ("sequencer.select_box", {"type": params.select_tweak, "value": 'ANY', "shift": True},
-         {"properties":[("wait_for_input", False), ("mode", 'ADD')]}),
-        ("sequencer.select_box", {"type": params.select_tweak, "value": 'ANY', "ctrl": True},
-         {"properties":[("wait_for_input", False), ("mode", 'SUB')]}),
-        ("sequencer.select_grouped", {"type": 'G', "value": 'PRESS', "shift": True}, None),
-        op_menu("SEQUENCER_MT_add", {"type": 'A', "value": 'PRESS', "shift": True}),
-        op_menu("SEQUENCER_MT_change", {"type": 'C', "value": 'PRESS'}),
-        op_menu("SEQUENCER_MT_context_menu", params.context_menu_event),
-        ("sequencer.slip", {"type": 'S', "value": 'PRESS'}, None),
-        ("wm.context_set_int", {"type": 'O', "value": 'PRESS'},
-         {"properties": [("data_path", 'scene.sequence_editor.overlay_frame'), ("value", 0)]}),
-        ("transform.seq_slide", {"type": 'G', "value": 'PRESS'}, None),
-        ("transform.seq_slide", {"type": params.select_mouse, "value": 'PRESS'}, None),
-        ("transform.transform", {"type": 'E', "value": 'PRESS'},
-         {"properties": [("mode", 'TIME_EXTEND')]}),
-        ("marker.add", {"type": 'M', "value": 'PRESS'}, None),
-        ("marker.rename", {"type": 'M', "value": 'PRESS', "ctrl": True}, None),
-    ])
-
-    return keymap
-
-
-def km_sequencerpreview(params):
-    items = []
-    keymap = (
-        "SequencerPreview",
-        {"space_type": 'SEQUENCE_EDITOR', "region_type": 'WINDOW'},
-        {"items": items},
-    )
-
-    items.extend([
-        ("sequencer.view_all_preview", {"type": 'HOME', "value": 'PRESS'}, None),
-        ("sequencer.view_all_preview", {"type": 'NDOF_BUTTON_FIT', "value": 'PRESS'}, None),
-        ("sequencer.view_ghost_border", {"type": 'O', "value": 'PRESS'}, None),
-        ("sequencer.view_zoom_ratio", {"type": 'NUMPAD_1', "value": 'PRESS'},
-         {"properties": [("ratio", 1.0)]}),
-        ("sequencer.sample", {"type": params.action_mouse, "value": 'PRESS'}, None),
     ])
 
     return keymap
@@ -5799,9 +5645,6 @@ def generate_keymaps(params=None):
         km_nla_editor(params),
         km_text_generic(params),
         km_text(params),
-        km_sequencercommon(params),
-        km_sequencer(params),
-        km_sequencerpreview(params),
         km_console(params),
         km_clip(params),
         km_clip_editor(params),

@@ -83,7 +83,6 @@ _modules = [
     "space_node",
     "space_outliner",
     "space_properties",
-    "space_sequencer",
     "space_statusbar",
     "space_text",
     "space_time",

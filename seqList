@@ -1,0 +1,11 @@
+release/datafiles/userdef/userdef_default_theme.c:  .space_sequencer = {
+Binary file .git/index matches
+
+source/blender/editors/include/ED_sequencer.h:bool ED_space_sequencer_maskedit_mask_poll(struct bContext *C);
+source/blender/editors/include/ED_sequencer.h:bool ED_space_sequencer_check_show_maskedit(struct SpaceSeq *sseq, struct Scene *scene);
+source/blender/editors/include/ED_sequencer.h:bool ED_space_sequencer_maskedit_poll(struct bContext *C);
+source/blender/editors/include/ED_sequencer.h:bool ED_space_sequencer_check_show_imbuf(struct SpaceSeq *sseq);
+source/blender/editors/include/ED_sequencer.h:bool ED_space_sequencer_check_show_strip(struct SpaceSeq *sseq);
+
+
+source/blender/editors/screen/CMakeLists.txt:  bf_editor_space_sequencer

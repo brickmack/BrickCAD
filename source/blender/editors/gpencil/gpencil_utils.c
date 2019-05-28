@@ -156,18 +156,6 @@ bGPdata **ED_gpencil_data_get_pointers_direct(
         /* even when there is no node-tree, don't allow this to flow to scene */
         return NULL;
       }
-      case SPACE_SEQ: /* Sequencer */
-      {
-        SpaceSeq *sseq = (SpaceSeq *)sl;
-
-        /* For now, Grease Pencil data is associated with the space
-         * (actually preview region only). */
-        /* XXX our convention for everything else is to link to data though... */
-        if (r_ptr) {
-          RNA_pointer_create(screen_id, &RNA_SpaceSequenceEditor, sseq, r_ptr);
-        }
-        return &sseq->gpd;
-      }
       case SPACE_IMAGE: /* Image/UV Editor */
       {
         SpaceImage *sima = (SpaceImage *)sl;

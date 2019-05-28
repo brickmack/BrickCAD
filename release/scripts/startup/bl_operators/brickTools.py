@@ -125,6 +125,34 @@ class SelectByMouldAndColorOP(bpy.types.Operator):
 			
 		return {'FINISHED'}
 
+class ListPartsOP(bpy.types.Operator):
+	bl_idname = "object.list_parts"
+	bl_label = "List parts"
+
+	def execute(self, context):
+		partsCount = [] #array of paired part name and quantity
+
+		for brick in context.scene.objects:
+			if brick.type != "EMPTY":
+				#check if part of this name is already in the array
+				found = False
+				for pair in partsCount:
+					if pair[0] == brick.name.split(".")[0]:
+						#found it, increment count
+						pair[1] = pair[1] + 1
+						found = True
+						break
+
+				#if we didn't find it, add a new entry
+				if found == False:
+					partsCount.append([brick.name.split(".")[0], 1])
+
+		#print the whole partslist, for early debugging (will eventually go to its own editor panel)
+		for pair in partsCount:
+			print(pair[0] + ": " + str(pair[1]))
+		
+		return {'FINISHED'}
+
 class SelectBrickOP(bpy.types.Operator):
 	#temporary tool for testing, will eventually replace the default selection feature
 	bl_idname = "object.select_brick"
@@ -195,4 +223,4 @@ class Brick:
 
 		return False
 
-classes = [SelectConnectedOP, SelectByColorOP, SelectByMouldOP, SelectByMouldAndColorOP, SelectBrickOP, DeleteBrickOP]
+classes = [SelectConnectedOP, SelectByColorOP, SelectByMouldOP, SelectByMouldAndColorOP, ListPartsOP, SelectBrickOP, DeleteBrickOP]

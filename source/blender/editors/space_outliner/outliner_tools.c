@@ -65,7 +65,6 @@
 #include "ED_object.h"
 #include "ED_scene.h"
 #include "ED_screen.h"
-#include "ED_sequencer.h"
 #include "ED_undo.h"
 
 #include "WM_api.h"
@@ -836,20 +835,6 @@ static void ebone_cb(int event, TreeElement *te, TreeStoreElem *UNUSED(tselem), 
   else if (event == OL_DOP_UNHIDE) {
     ebone->flag &= ~BONE_HIDDEN_A;
   }
-}
-
-static void sequence_cb(int event, TreeElement *te, TreeStoreElem *tselem, void *scene_ptr)
-{
-  Sequence *seq = (Sequence *)te->directdata;
-  if (event == OL_DOP_SELECT) {
-    Scene *scene = (Scene *)scene_ptr;
-    Editing *ed = BKE_sequencer_editing_get(scene, false);
-    if (BLI_findindex(ed->seqbasep, seq) != -1) {
-      ED_sequencer_select_sequence_single(scene, seq, true);
-    }
-  }
-
-  (void)tselem;
 }
 
 static void gp_layer_cb(int event,
@@ -2091,12 +2076,6 @@ static int outliner_data_operation_exec(bContext *C, wmOperator *op)
       outliner_do_data_operation(soops, datalevel, event, &soops->tree, ebone_cb, NULL);
       WM_event_add_notifier(C, NC_OBJECT | ND_POSE, NULL);
       ED_undo_push(C, "EditBone operation");
-
-      break;
-    }
-    case TSE_SEQUENCE: {
-      Scene *scene = CTX_data_scene(C);
-      outliner_do_data_operation(soops, datalevel, event, &soops->tree, sequence_cb, scene);
 
       break;
     }

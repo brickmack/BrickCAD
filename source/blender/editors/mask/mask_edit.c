@@ -38,7 +38,6 @@
 #include "ED_image.h"
 #include "ED_object.h" /* ED_keymap_proportional_maskmode only */
 #include "ED_clip.h"
-#include "ED_sequencer.h"
 #include "ED_transform.h"
 
 #include "UI_view2d.h"
@@ -56,8 +55,6 @@ bool ED_maskedit_poll(bContext *C)
     switch (sa->spacetype) {
       case SPACE_CLIP:
         return ED_space_clip_maskedit_poll(C);
-      case SPACE_SEQ:
-        return ED_space_sequencer_maskedit_poll(C);
       case SPACE_IMAGE:
         return ED_space_image_maskedit_poll(C);
     }
@@ -72,8 +69,6 @@ bool ED_maskedit_mask_poll(bContext *C)
     switch (sa->spacetype) {
       case SPACE_CLIP:
         return ED_space_clip_maskedit_mask_poll(C);
-      case SPACE_SEQ:
-        return ED_space_sequencer_maskedit_mask_poll(C);
       case SPACE_IMAGE:
         return ED_space_image_maskedit_mask_poll(C);
     }
@@ -92,10 +87,6 @@ void ED_mask_mouse_pos(ScrArea *sa, ARegion *ar, const int mval[2], float co[2])
         SpaceClip *sc = sa->spacedata.first;
         ED_clip_mouse_pos(sc, ar, mval, co);
         BKE_mask_coord_from_movieclip(sc->clip, &sc->user, co, co);
-        break;
-      }
-      case SPACE_SEQ: {
-        UI_view2d_region_to_view(&ar->v2d, mval[0], mval[1], &co[0], &co[1]);
         break;
       }
       case SPACE_IMAGE: {
@@ -131,9 +122,6 @@ void ED_mask_point_pos(ScrArea *sa, ARegion *ar, float x, float y, float *xr, fl
         BKE_mask_coord_from_movieclip(sc->clip, &sc->user, co, co);
         break;
       }
-      case SPACE_SEQ:
-        zero_v2(co); /* MASKTODO */
-        break;
       case SPACE_IMAGE: {
         SpaceImage *sima = sa->spacedata.first;
         ED_image_point_pos(sima, ar, x, y, &co[0], &co[1]);
@@ -170,9 +158,6 @@ void ED_mask_point_pos__reverse(ScrArea *sa, ARegion *ar, float x, float y, floa
         ED_clip_point_stable_pos__reverse(sc, ar, co, co);
         break;
       }
-      case SPACE_SEQ:
-        zero_v2(co); /* MASKTODO */
-        break;
       case SPACE_IMAGE: {
         SpaceImage *sima = sa->spacedata.first;
         co[0] = x;
@@ -206,12 +191,6 @@ void ED_mask_get_size(ScrArea *sa, int *width, int *height)
         ED_space_clip_get_size(sc, width, height);
         break;
       }
-      case SPACE_SEQ: {
-        //              Scene *scene = CTX_data_scene(C);
-        //              *width = (scene->r.size * scene->r.xsch) / 100;
-        //              *height = (scene->r.size * scene->r.ysch) / 100;
-        break;
-      }
       case SPACE_IMAGE: {
         SpaceImage *sima = sa->spacedata.first;
         ED_space_image_get_size(sima, width, height);
@@ -241,10 +220,6 @@ void ED_mask_zoom(ScrArea *sa, ARegion *ar, float *zoomx, float *zoomy)
         ED_space_clip_get_zoom(sc, ar, zoomx, zoomy);
         break;
       }
-      case SPACE_SEQ: {
-        *zoomx = *zoomy = 1.0f;
-        break;
-      }
       case SPACE_IMAGE: {
         SpaceImage *sima = sa->spacedata.first;
         ED_space_image_get_zoom(sima, ar, zoomx, zoomy);
@@ -270,10 +245,6 @@ void ED_mask_get_aspect(ScrArea *sa, ARegion *UNUSED(ar), float *aspx, float *as
       case SPACE_CLIP: {
         SpaceClip *sc = sa->spacedata.first;
         ED_space_clip_get_aspect(sc, aspx, aspy);
-        break;
-      }
-      case SPACE_SEQ: {
-        *aspx = *aspy = 1.0f; /* MASKTODO - render aspect? */
         break;
       }
       case SPACE_IMAGE: {
@@ -309,10 +280,6 @@ void ED_mask_pixelspace_factor(ScrArea *sa, ARegion *ar, float *scalex, float *s
         *scaley *= aspy;
         break;
       }
-      case SPACE_SEQ: {
-        *scalex = *scaley = 1.0f; /* MASKTODO? */
-        break;
-      }
       case SPACE_IMAGE: {
         SpaceImage *sima = sa->spacedata.first;
         float aspx, aspy;
@@ -344,10 +311,6 @@ void ED_mask_cursor_location_get(ScrArea *sa, float cursor[2])
       case SPACE_CLIP: {
         SpaceClip *space_clip = sa->spacedata.first;
         copy_v2_v2(cursor, space_clip->cursor);
-        break;
-      }
-      case SPACE_SEQ: {
-        zero_v2(cursor);
         break;
       }
       case SPACE_IMAGE: {

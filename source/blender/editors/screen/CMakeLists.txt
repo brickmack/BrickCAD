@@ -57,7 +57,6 @@ set(SRC
 
 set(LIB
   bf_editor_datafiles
-  bf_editor_space_sequencer
 )
 
 if(WITH_INTERNATIONAL)

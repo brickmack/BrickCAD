@@ -874,7 +874,7 @@ static eOLDrawState tree_element_active_sequence(bContext *C,
       if (set == OL_SETSEL_EXTEND) {
         BKE_sequencer_active_set(scene, NULL);
       }
-      ED_sequencer_deselect_all(scene);
+//      ED_sequencer_deselect_all(scene);
 
       if ((set == OL_SETSEL_EXTEND) && seq->flag & SELECT) {
         seq->flag &= ~SELECT;

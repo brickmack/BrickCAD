@@ -1147,7 +1147,7 @@ static void TRANSFORM_OT_seq_slide(struct wmOperatorType *ot)
   ot->exec = transform_exec;
   ot->modal = transform_modal;
   ot->cancel = transform_cancel;
-  ot->poll = ED_operator_sequencer_active;
+  //ot->poll = ED_operator_sequencer_active;
 
   RNA_def_float_vector_xyz(
       ot->srna, "value", 2, NULL, -FLT_MAX, FLT_MAX, "Offset", "", -FLT_MAX, FLT_MAX);

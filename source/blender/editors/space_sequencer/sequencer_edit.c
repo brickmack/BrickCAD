@@ -565,9 +565,11 @@ int seq_effect_find_selected(Scene *scene,
 
   *error_str = NULL;
 
+/*
   if (!activeseq) {
     seq2 = BKE_sequencer_active_get(scene);
   }
+*/
 
   for (seq = ed->seqbasep->first; seq; seq = seq->next) {
     if (seq->flag & SELECT) {
@@ -714,6 +716,7 @@ static void del_seq_clear_modifiers_recurs(Scene *scene, Sequence *deleting_sequ
 
 static void recurs_del_seq_flag(Scene *scene, ListBase *lb, short flag, short deleteall)
 {
+/*
   Sequence *seq, *seqn;
   Sequence *last_seq = BKE_sequencer_active_get(scene);
 
@@ -732,6 +735,7 @@ static void recurs_del_seq_flag(Scene *scene, ListBase *lb, short flag, short de
     }
     seq = seqn;
   }
+*/
 }
 
 static Sequence *cut_seq_hard(Scene *scene, Sequence *seq, ListBase *new_seq_list, int cutframe)
@@ -1057,6 +1061,7 @@ static void set_filter_seq(Scene *scene)
 
 static void UNUSED_FUNCTION(seq_remap_paths)(Scene *scene)
 {
+/*
   Sequence *seq, *last_seq = BKE_sequencer_active_get(scene);
   Editing *ed = BKE_sequencer_editing_get(scene, false);
   char from[FILE_MAX], to[FILE_MAX], stripped[FILE_MAX];
@@ -1082,17 +1087,18 @@ static void UNUSED_FUNCTION(seq_remap_paths)(Scene *scene)
       if (STREQLEN(seq->strip->dir, from, strlen(from))) {
         printf("found %s\n", seq->strip->dir);
 
-        /* strip off the beginning */
+        //strip off the beginning
         stripped[0] = 0;
         BLI_strncpy(stripped, seq->strip->dir + strlen(from), FILE_MAX);
 
-        /* new path */
+        //new path
         BLI_snprintf(seq->strip->dir, sizeof(seq->strip->dir), "%s%s", to, stripped);
         printf("new %s\n", seq->strip->dir);
       }
     }
   }
   SEQ_END;
+*/
 }
 
 static int sequencer_gap_remove_exec(bContext *C, wmOperator *op)
@@ -2044,6 +2050,7 @@ void SEQUENCER_OT_refresh_all(struct wmOperatorType *ot)
 
 static int sequencer_reassign_inputs_exec(bContext *C, wmOperator *op)
 {
+/*
   Scene *scene = CTX_data_scene(C);
   Sequence *seq1, *seq2, *seq3, *last_seq = BKE_sequencer_active_get(scene);
   const char *error_msg;
@@ -2053,7 +2060,7 @@ static int sequencer_reassign_inputs_exec(bContext *C, wmOperator *op)
     BKE_report(op->reports, RPT_ERROR, error_msg);
     return OPERATOR_CANCELLED;
   }
-  /* see reassigning would create a cycle */
+  //see reassigning would create a cycle
   if (seq_is_predecessor(seq1, last_seq) || seq_is_predecessor(seq2, last_seq) ||
       seq_is_predecessor(seq3, last_seq)) {
     BKE_report(op->reports, RPT_ERROR, "Cannot reassign inputs: no cycles allowed");
@@ -2069,10 +2076,13 @@ static int sequencer_reassign_inputs_exec(bContext *C, wmOperator *op)
   WM_event_add_notifier(C, NC_SCENE | ND_SEQUENCER, scene);
 
   return OPERATOR_FINISHED;
+*/
+  return OPERATOR_FINISHED;
 }
 
 static bool sequencer_effect_poll(bContext *C)
 {
+/*
   Scene *scene = CTX_data_scene(C);
   Editing *ed = BKE_sequencer_editing_get(scene, false);
 
@@ -2082,7 +2092,7 @@ static bool sequencer_effect_poll(bContext *C)
       return 1;
     }
   }
-
+*/
   return 0;
 }
 
@@ -2103,6 +2113,7 @@ void SEQUENCER_OT_reassign_inputs(struct wmOperatorType *ot)
 
 static int sequencer_swap_inputs_exec(bContext *C, wmOperator *op)
 {
+/*
   Scene *scene = CTX_data_scene(C);
   Sequence *seq, *last_seq = BKE_sequencer_active_get(scene);
 
@@ -2118,7 +2129,7 @@ static int sequencer_swap_inputs_exec(bContext *C, wmOperator *op)
   BKE_sequencer_update_changed_seq_and_deps(scene, last_seq, 1, 1);
 
   WM_event_add_notifier(C, NC_SCENE | ND_SEQUENCER, scene);
-
+*/
   return OPERATOR_FINISHED;
 }
 void SEQUENCER_OT_swap_inputs(struct wmOperatorType *ot)
@@ -2210,7 +2221,7 @@ static int sequencer_cut_invoke(bContext *C, wmOperator *op, const wmEvent *even
   int cut_frame = CFRA;
 
   if (cut_side == SEQ_SIDE_MOUSE) {
-    if (ED_operator_sequencer_active(C) && v2d) {
+    if (1==0) { //temp remove
       cut_side = mouse_frame_side(v2d, event->mval[0], cut_frame);
     }
     else {
@@ -2315,7 +2326,7 @@ void SEQUENCER_OT_duplicate(wmOperatorType *ot)
 
   /* api callbacks */
   ot->exec = sequencer_add_duplicate_exec;
-  ot->poll = ED_operator_sequencer_active;
+  //ot->poll = ED_operator_sequencer_active;
 
   /* flags */
   ot->flag = OPTYPE_REGISTER | OPTYPE_UNDO;
@@ -2828,7 +2839,7 @@ void SEQUENCER_OT_view_all(wmOperatorType *ot)
 
   /* api callbacks */
   ot->exec = sequencer_view_all_exec;
-  ot->poll = ED_operator_sequencer_active;
+  //ot->poll = ED_operator_sequencer_active;
 
   /* flags */
   ot->flag = OPTYPE_REGISTER;
@@ -2851,7 +2862,7 @@ void SEQUENCER_OT_view_frame(wmOperatorType *ot)
 
   /* api callbacks */
   ot->exec = sequencer_view_frame_exec;
-  ot->poll = ED_operator_sequencer_active;
+  //ot->poll = ED_operator_sequencer_active;
 
   /* flags */
   ot->flag = OPTYPE_REGISTER | OPTYPE_UNDO;
@@ -2915,7 +2926,7 @@ void SEQUENCER_OT_view_all_preview(wmOperatorType *ot)
 
   /* api callbacks */
   ot->exec = sequencer_view_all_preview_exec;
-  ot->poll = ED_operator_sequencer_active;
+  //ot->poll = ED_operator_sequencer_active;
 
   /* flags */
   ot->flag = OPTYPE_REGISTER;
@@ -2950,7 +2961,7 @@ void SEQUENCER_OT_view_zoom_ratio(wmOperatorType *ot)
 
   /* api callbacks */
   ot->exec = sequencer_view_zoom_ratio_exec;
-  ot->poll = ED_operator_sequencer_active;
+  //ot->poll = ED_operator_sequencer_active;
 
   /* properties */
   RNA_def_float(ot->srna,
@@ -3001,7 +3012,7 @@ void SEQUENCER_OT_view_toggle(wmOperatorType *ot)
 
   /* api callbacks */
   ot->exec = sequencer_view_toggle_exec;
-  ot->poll = ED_operator_sequencer_active;
+  //ot->poll = ED_operator_sequencer_active;
 
   /* flags */
   ot->flag = OPTYPE_REGISTER;
@@ -3083,7 +3094,7 @@ void SEQUENCER_OT_view_selected(wmOperatorType *ot)
 
   /* api callbacks */
   ot->exec = sequencer_view_selected_exec;
-  ot->poll = ED_operator_sequencer_active;
+  //ot->poll = ED_operator_sequencer_active;
 
   /* flags */
   ot->flag = OPTYPE_REGISTER;
@@ -3472,7 +3483,7 @@ void SEQUENCER_OT_paste(wmOperatorType *ot)
 
   /* api callbacks */
   ot->exec = sequencer_paste_exec;
-  ot->poll = ED_operator_sequencer_active;
+ // ot->poll = ED_operator_sequencer_active;
 
   /* flags */
   ot->flag = OPTYPE_REGISTER | OPTYPE_UNDO;
@@ -3535,7 +3546,7 @@ void SEQUENCER_OT_swap_data(wmOperatorType *ot)
 
   /* api callbacks */
   ot->exec = sequencer_swap_data_exec;
-  ot->poll = ED_operator_sequencer_active;
+  //ot->poll = ED_operator_sequencer_active;
 
   /* flags */
   ot->flag = OPTYPE_REGISTER | OPTYPE_UNDO;
@@ -3913,7 +3924,7 @@ static int sequencer_change_path_exec(bContext *C, wmOperator *op)
 
     /* need to find min/max frame for placeholders */
     if (use_placeholders) {
-      len = sequencer_image_seq_get_minmax_frame(op, seq->sfra, &minframe, &numdigits);
+      //len = sequencer_image_seq_get_minmax_frame(op, seq->sfra, &minframe, &numdigits);
     }
     else {
       len = RNA_property_collection_length(op->ptr, RNA_struct_find_property(op->ptr, "files"));
@@ -3937,7 +3948,7 @@ static int sequencer_change_path_exec(bContext *C, wmOperator *op)
     seq->strip->stripdata = se = MEM_callocN(len * sizeof(StripElem), "stripelem");
 
     if (use_placeholders) {
-      sequencer_image_seq_reserve_frames(op, se, len, minframe, numdigits);
+      //sequencer_image_seq_reserve_frames(op, se, len, minframe, numdigits);
     }
     else {
       RNA_BEGIN (op->ptr, itemptr, "files") {

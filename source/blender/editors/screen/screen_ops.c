@@ -76,7 +76,6 @@
 #include "ED_object.h"
 #include "ED_screen.h"
 #include "ED_screen_types.h"
-#include "ED_sequencer.h"
 #include "ED_util.h"
 #include "ED_undo.h"
 #include "ED_view3d.h"
@@ -238,9 +237,11 @@ bool ED_operator_animview_active(bContext *C)
 {
   if (ED_operator_areaactive(C)) {
     SpaceLink *sl = (SpaceLink *)CTX_wm_space_data(C);
+/*
     if (sl && (ELEM(sl->spacetype, SPACE_SEQ, SPACE_ACTION, SPACE_NLA, SPACE_GRAPH))) {
       return true;
     }
+*/
   }
 
   CTX_wm_operator_poll_msg_set(C, "expected a timeline/animation area to be active");
@@ -307,16 +308,6 @@ bool ED_operator_node_editable(bContext *C)
 bool ED_operator_graphedit_active(bContext *C)
 {
   return ed_spacetype_test(C, SPACE_GRAPH);
-}
-
-bool ED_operator_sequencer_active(bContext *C)
-{
-  return ed_spacetype_test(C, SPACE_SEQ);
-}
-
-bool ED_operator_sequencer_active_editable(bContext *C)
-{
-  return ed_spacetype_test(C, SPACE_SEQ) && ED_operator_scene_editable(C);
 }
 
 bool ED_operator_image_active(bContext *C)
@@ -590,11 +581,6 @@ bool ED_operator_mask(bContext *C)
       case SPACE_CLIP: {
         SpaceClip *sc = sa->spacedata.first;
         return ED_space_clip_check_show_maskedit(sc);
-      }
-      case SPACE_SEQ: {
-        SpaceSeq *sseq = sa->spacedata.first;
-        Scene *scene = CTX_data_scene(C);
-        return ED_space_sequencer_check_show_maskedit(sseq, scene);
       }
       case SPACE_IMAGE: {
         SpaceImage *sima = sa->spacedata.first;
@@ -4142,11 +4128,6 @@ static int match_region_with_redraws(int spacetype,
           return 1;
         }
         break;
-      case SPACE_SEQ:
-        if ((redraws & (TIME_SEQ | TIME_ALL_ANIM_WIN)) || from_anim_edit) {
-          return 1;
-        }
-        break;
       case SPACE_NODE:
         if (redraws & (TIME_NODES)) {
           return 1;
@@ -4196,11 +4177,6 @@ static int match_region_with_redraws(int spacetype,
   }
   else if (regiontype == RGN_TYPE_PREVIEW) {
     switch (spacetype) {
-      case SPACE_SEQ:
-        if (redraws & (TIME_SEQ | TIME_ALL_ANIM_WIN)) {
-          return 1;
-        }
-        break;
       case SPACE_CLIP:
         return 1;
     }

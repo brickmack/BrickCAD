@@ -49,7 +49,6 @@
 
 #include "ED_anim_api.h"
 #include "ED_screen.h"
-#include "ED_sequencer.h"
 #include "ED_util.h"
 
 #include "anim_intern.h"
@@ -94,12 +93,7 @@ static void change_frame_apply(bContext *C, wmOperator *op)
   bool do_snap = RNA_boolean_get(op->ptr, "snap");
 
   if (do_snap) {
-    if (CTX_wm_space_seq(C)) {
-      frame = BKE_sequencer_find_next_prev_edit(scene, frame, SEQ_SIDE_BOTH, true, false, false);
-    }
-    else {
-      frame = BKE_scene_frame_snap_by_seconds(scene, 1.0, frame);
-    }
+    frame = BKE_scene_frame_snap_by_seconds(scene, 1.0, frame);
   }
 
   /* set the new frame number */
@@ -148,42 +142,6 @@ static float frame_from_event(bContext *C, const wmEvent *event)
   return frame;
 }
 
-static void change_frame_seq_preview_begin(bContext *C, const wmEvent *event)
-{
-  ScrArea *sa = CTX_wm_area(C);
-  bScreen *screen = CTX_wm_screen(C);
-  if (sa && sa->spacetype == SPACE_SEQ) {
-    SpaceSeq *sseq = sa->spacedata.first;
-    if (ED_space_sequencer_check_show_strip(sseq)) {
-      ED_sequencer_special_preview_set(C, event->mval);
-    }
-  }
-  if (screen) {
-    screen->scrubbing = true;
-  }
-}
-
-static void change_frame_seq_preview_end(bContext *C)
-{
-  bScreen *screen = CTX_wm_screen(C);
-  bool notify = false;
-
-  if (screen->scrubbing) {
-    screen->scrubbing = false;
-    notify = true;
-  }
-
-  if (ED_sequencer_special_preview_get() != NULL) {
-    ED_sequencer_special_preview_clear();
-    notify = true;
-  }
-
-  if (notify) {
-    Scene *scene = CTX_data_scene(C);
-    WM_event_add_notifier(C, NC_SCENE | ND_FRAME, scene);
-  }
-}
-
 /* Modal Operator init */
 static int change_frame_invoke(bContext *C, wmOperator *op, const wmEvent *event)
 {
@@ -193,19 +151,12 @@ static int change_frame_invoke(bContext *C, wmOperator *op, const wmEvent *event
    */
   RNA_float_set(op->ptr, "frame", frame_from_event(C, event));
 
-  change_frame_seq_preview_begin(C, event);
-
   change_frame_apply(C, op);
 
   /* add temp handler */
   WM_event_add_modal_handler(C, op);
 
   return OPERATOR_RUNNING_MODAL;
-}
-
-static void change_frame_cancel(bContext *C, wmOperator *UNUSED(op))
-{
-  change_frame_seq_preview_end(C);
 }
 
 /* Modal event handling of frame changing */
@@ -243,10 +194,6 @@ static int change_frame_modal(bContext *C, wmOperator *op, const wmEvent *event)
       break;
   }
 
-  if (ret != OPERATOR_RUNNING_MODAL) {
-    change_frame_seq_preview_end(C);
-  }
-
   return ret;
 }
 
@@ -262,7 +209,7 @@ static void ANIM_OT_change_frame(wmOperatorType *ot)
   /* api callbacks */
   ot->exec = change_frame_exec;
   ot->invoke = change_frame_invoke;
-  ot->cancel = change_frame_cancel;
+  //ot->cancel = change_frame_cancel;
   ot->modal = change_frame_modal;
   ot->poll = change_frame_poll;
 

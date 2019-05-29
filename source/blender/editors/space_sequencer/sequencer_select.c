@@ -562,7 +562,7 @@ void SEQUENCER_OT_select(wmOperatorType *ot)
 
   /* api callbacks */
   ot->invoke = sequencer_select_invoke;
-  ot->poll = ED_operator_sequencer_active;
+ // ot->poll = ED_operator_sequencer_active;
 
   /* flags */
   ot->flag = OPTYPE_REGISTER | OPTYPE_UNDO;
@@ -761,7 +761,7 @@ void SEQUENCER_OT_select_linked_pick(wmOperatorType *ot)
 
   /* api callbacks */
   ot->invoke = sequencer_select_linked_pick_invoke;
-  ot->poll = ED_operator_sequencer_active;
+  //ot->poll = ED_operator_sequencer_active;
 
   /* flags */
   ot->flag = OPTYPE_REGISTER | OPTYPE_UNDO;
@@ -950,7 +950,7 @@ void SEQUENCER_OT_select_box(wmOperatorType *ot)
   ot->modal = WM_gesture_box_modal;
   ot->cancel = WM_gesture_box_cancel;
 
-  ot->poll = ED_operator_sequencer_active;
+  //ot->poll = ED_operator_sequencer_active;
 
   /* flags */
   ot->flag = OPTYPE_REGISTER | OPTYPE_UNDO;

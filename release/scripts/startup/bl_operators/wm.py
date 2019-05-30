@@ -1205,7 +1205,7 @@ class WM_OT_properties_edit(Operator):
                         _update_strips(nt.strips)
 
         # otherwise existing buttons which reference freed
-        # memory may crash blender [#26510]
+        # memory may crash brickcad [#26510]
         # context.area.tag_redraw()
         for win in context.window_manager.windows:
             for area in win.screen.areas:
@@ -1588,7 +1588,7 @@ class WM_MT_splash(Menu):
         row.label(text="Shortcuts")
         text = bpy.path.display_name(wm.keyconfigs.active.name)
         if not text:
-            text = "Blender"
+            text = "BrickCAD"
         sub.menu("USERPREF_MT_keyconfigs", text=text)
 
         kc = wm.keyconfigs.active

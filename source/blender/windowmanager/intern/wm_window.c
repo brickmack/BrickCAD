@@ -375,7 +375,7 @@ static void wm_confirm_quit(bContext *C)
 
 /**
  * Call the quit confirmation prompt or exit directly if needed. The use can
- * still cancel via the confirmation popup. Also, this may not quit Blender
+ * still cancel via the confirmation popup. Also, this may not quit brickcad
  * immediately, but rather schedule the closing.
  *
  * \param win: The window to show the confirmation popup/window in.
@@ -467,14 +467,14 @@ void wm_window_title(wmWindowManager *wm, wmWindow *win)
       char str[sizeof(((Main *)NULL)->name) + 24];
       BLI_snprintf(str,
                    sizeof(str),
-                   "Blender%s [%s%s]",
+                   "BrickCAD%s [%s%s]",
                    wm->file_saved ? "" : "*",
                    BKE_main_blendfile_path_from_global(),
                    G_MAIN->recovered ? " (Recovered)" : "");
       GHOST_SetTitle(win->ghostwin, str);
     }
     else {
-      GHOST_SetTitle(win->ghostwin, "Blender");
+      GHOST_SetTitle(win->ghostwin, "BrickCAD");
     }
 
     /* Informs GHOST of unsaved changes, to set window modified visual indicator (macOS)
@@ -508,9 +508,9 @@ void WM_window_set_dpi(wmWindow *win)
     CLAMP(U.ui_scale, 0.25f, 4.0f);
   }
 
-  /* Blender's UI drawing assumes DPI 72 as a good default following macOS
+  /* BrickCAD's UI drawing assumes DPI 72 as a good default following macOS
    * while Windows and Linux use DPI 96. GHOST assumes a default 96 so we
-   * remap the DPI to Blender's convention. */
+   * remap the DPI to BrickCADf's convention. */
   auto_dpi *= GHOST_GetNativePixelSize(win->ghostwin);
   int dpi = auto_dpi * U.ui_scale * (72.0 / 96.0f);
 
@@ -595,7 +595,7 @@ static void wm_window_ghostwindow_add(wmWindowManager *wm, const char *title, wm
 
     wm_window_ensure_eventstate(win);
 
-    /* store actual window size in blender window */
+    /* store actual window size in BrickCAD window */
     bounds = GHOST_GetClientBounds(win->ghostwin);
 
     /* win32: gives undefined window size when minimized */
@@ -1277,7 +1277,7 @@ static int ghost_event_proc(GHOST_EventHandle evt, GHOST_TUserDataPtr C_void_ptr
         /* window might be focused by mouse click in configuration of window manager
          * when focus is not following mouse
          * click could have been done on a button and depending on window manager settings
-         * click would be passed to blender or not, but in any case button under cursor
+         * click would be passed to brickcad or not, but in any case button under cursor
          * should be activated, so at max next click on button without moving mouse
          * would trigger it's handle function
          * currently it seems to be common practice to generate new event for, but probably
@@ -1449,7 +1449,7 @@ static int ghost_event_proc(GHOST_EventHandle evt, GHOST_TUserDataPtr C_void_ptr
 
         wm_event_add(win, &event);
 
-        /* make blender drop event with custom data pointing to wm drags */
+        /* make brickcad drop event with custom data pointing to wm drags */
         event.type = EVT_DROP;
         event.val = KM_RELEASE;
         event.custom = EVT_DATA_DRAGDROP;
@@ -1791,7 +1791,7 @@ char *WM_clipboard_text_get(bool selection, int *r_len)
 }
 
 /**
- * Convenience function for pasting to areas of Blender which don't support newlines.
+ * Convenience function for pasting to areas of brickcad which don't support newlines.
  */
 char *WM_clipboard_text_get_firstline(bool selection, int *r_len)
 {
@@ -2228,7 +2228,7 @@ void WM_window_set_active_layout(wmWindow *win, WorkSpace *workspace, WorkSpaceL
 bScreen *WM_window_get_active_screen(const wmWindow *win)
 {
   const WorkSpace *workspace = WM_window_get_active_workspace(win);
-  /* May be NULL in rare cases like closing Blender */
+  /* May be NULL in rare cases like closing brickcad */
   return (LIKELY(workspace != NULL) ? BKE_workspace_active_screen_get(win->workspace_hook) : NULL);
 }
 void WM_window_set_active_screen(wmWindow *win, WorkSpace *workspace, bScreen *screen)

@@ -162,7 +162,7 @@ void WM_init_state_start_with_console_set(bool value)
 
 /**
  * Since we cannot know in advance if we will require the draw manager
- * context when starting blender in background mode (specially true with
+ * context when starting BrickCAD in background mode (specially true with
  * scripts) we deferre the ghost initialization the most as possible
  * so that it does not break anything that can run in headless mode (as in
  * without display server attached).
@@ -546,7 +546,7 @@ void WM_exit_ext(bContext *C, const bool do_python)
   ED_gpencil_anim_copybuf_free();
   ED_gpencil_strokes_copybuf_free();
 
-  /* free gizmo-maps after freeing blender,
+  /* free gizmo-maps after freeing BrickCAD,
    * so no deleted data get accessed during cleaning up of areas. */
   wm_gizmomaptypes_free();
   wm_gizmogrouptype_free();
@@ -606,7 +606,7 @@ void WM_exit_ext(bContext *C, const bool do_python)
   BLI_threadapi_exit();
 
   /* No need to call this early, rather do it late so that other
-   * pieces of Blender using sound may exit cleanly, see also T50676. */
+   * pieces of BrickCAD using sound may exit cleanly, see also T50676. */
   BKE_sound_exit();
 
   CLG_exit();
@@ -626,15 +626,15 @@ void WM_exit_ext(bContext *C, const bool do_python)
 }
 
 /**
- * \brief Main exit function to close Blender ordinarily.
- * \note Use #wm_exit_schedule_delayed() to close Blender from an operator.
+ * \brief Main exit function to close BrickCAD ordinarily.
+ * \note Use #wm_exit_schedule_delayed() to close BrickCAD from an operator.
  * Might leak memory otherwise.
  */
 void WM_exit(bContext *C)
 {
   WM_exit_ext(C, 1);
 
-  printf("\nBlender quit\n");
+  printf("\nBrickCAD quit\n");
 
 #ifdef WIN32
   /* ask user to press a key when in debug mode */

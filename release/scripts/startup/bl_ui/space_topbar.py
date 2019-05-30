@@ -185,11 +185,6 @@ class TOPBAR_MT_app(Menu):
 
         layout.menu("TOPBAR_MT_app_about")
 
-        layout.separator()
-
-        layout.operator("preferences.app_template_install", text="Install Application Template...")
-
-
 class TOPBAR_MT_file(Menu):
     bl_label = "File"
 

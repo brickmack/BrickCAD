@@ -611,8 +611,7 @@ class WM_OT_context_set_id(Operator):
         value = self.value
         data_path = self.data_path
 
-        # match the pointer type from the target property to bpy.data.*
-        # so we lookup the correct list.
+        # match the pointer type from the target property to bpy.data.* so we lookup the correct list.
         data_path_base, data_path_prop = data_path.rsplit(".", 1)
         data_prop_rna = eval("context.%s" % data_path_base).rna_type.properties[data_path_prop]
         data_prop_rna_type = data_prop_rna.fixed_type
@@ -1204,8 +1203,7 @@ class WM_OT_properties_edit(Operator):
                     for nt in adt.nla_tracks:
                         _update_strips(nt.strips)
 
-        # otherwise existing buttons which reference freed
-        # memory may crash brickcad [#26510]
+        # otherwise existing buttons which reference freed memory may crash brickcad [#26510]
         # context.area.tag_redraw()
         for win in context.window_manager.windows:
             for area in win.screen.areas:
@@ -1566,7 +1564,6 @@ class WM_MT_splash(Menu):
 
     def draw_setup(self, context):
         wm = context.window_manager
-        # prefs = context.preferences
 
         layout = self.layout
 
@@ -1622,14 +1619,6 @@ class WM_MT_splash(Menu):
             label = "Blender Dark"
         sub.menu("USERPREF_MT_interface_theme_presets", text=label)
 
-        # We need to make switching to a language easier first
-        #sub = col.split(factor=0.35)
-        #row = sub.row()
-        #row.alignment = 'RIGHT'
-        # row.label(text="Language:")
-        #prefs = context.preferences
-        #sub.prop(prefs.system, "language", text="")
-
         # Keep height constant
         if not has_select_mouse:
             col.label()
@@ -1671,11 +1660,7 @@ class WM_MT_splash(Menu):
 
         split = layout.split()
 
-        # Templates
         col1 = split.column()
-        col1.label(text="New File")
-
-        bpy.types.TOPBAR_MT_file_new.draw_ex(col1, context, use_splash=True)
 
         # Recent
         col2 = split.column()
@@ -1689,18 +1674,10 @@ class WM_MT_splash(Menu):
             # Links if no recent files
             col2_title.label(text="Getting Started")
 
-            col2.operator(
-                "wm.url_open", text="Manual", icon='URL'
-            ).url = "https://docs.blender.org/manual/en/dev/"
-            col2.operator(
-                "wm.url_open", text="Release Notes", icon='URL',
-            ).url = "https://www.blender.org/download/releases/%d-%d/" % bpy.app.version[:2]
-            col2.operator(
-                "wm.url_open", text="Blender Website", icon='URL',
-            ).url = "https://www.blender.org"
-            col2.operator(
-                "wm.url_open", text="Credits", icon='URL',
-            ).url = "https://www.blender.org/about/credits/"
+            col2.operator("wm.url_open", text="Manual", icon='URL').url = "https://docs.blender.org/manual/en/dev/"
+            col2.operator("wm.url_open", text="Release Notes", icon='URL').url = "https://www.blender.org/download/releases/%d-%d/" % bpy.app.version[:2]
+            col2.operator("wm.url_open", text="Blender Website", icon='URL').url = "https://www.blender.org"
+            col2.operator("wm.url_open", text="Credits", icon='URL').url = "https://www.blender.org/about/credits/"
 
         layout.separator()
 
@@ -1710,6 +1687,7 @@ class WM_MT_splash(Menu):
         sub = col1.row()
         sub.operator_context = 'INVOKE_DEFAULT'
         sub.operator("wm.open_mainfile", text="Open...", icon='FILE_FOLDER')
+        sub.operator("wm.read_homefile", text="New", icon='FILE_NEW')
         col1.operator("wm.recover_last_session", icon='RECOVER_LAST')
 
         col2 = split.column()

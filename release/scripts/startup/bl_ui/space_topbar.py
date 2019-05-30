@@ -192,7 +192,7 @@ class TOPBAR_MT_file(Menu):
         layout = self.layout
 
         layout.operator_context = 'INVOKE_AREA'
-        layout.menu("TOPBAR_MT_file_new", text="New", icon='FILE_NEW')
+        layout.operator("wm.read_homefile", text="New", icon='FILE_NEW')
         layout.operator("wm.open_mainfile", text="Open...", icon='FILE_FOLDER')
         layout.menu("TOPBAR_MT_file_open_recent")
         layout.operator("wm.revert_mainfile")
@@ -237,6 +237,7 @@ class TOPBAR_MT_file(Menu):
 
 
 class TOPBAR_MT_file_new(Menu):
+#temp remove
     bl_label = "New File"
 
     @staticmethod
@@ -253,7 +254,6 @@ class TOPBAR_MT_file_new(Menu):
                     continue
                 template = os.path.join(path, d)
                 if os.path.isdir(template):
-                    # template_paths_expand.append(template)
                     app_templates.append(d)
 
         return sorted(app_templates)
@@ -271,31 +271,16 @@ class TOPBAR_MT_file_new(Menu):
             show_more = len(paths) > (splash_limit - 1)
             if show_more:
                 paths = paths[:splash_limit - 2]
-        elif use_more:
-            icon = 'FILE_NEW'
-            paths = paths[splash_limit - 2:]
-            show_more = False
         else:
             icon = 'NONE'
             show_more = False
 
         # Draw application templates.
         if not use_more:
-            props = layout.operator("wm.read_homefile", text="General", icon=icon)
+            props = layout.operator("wm.read_homefile", text="New", icon=icon)
             props.app_template = ""
 
-        for d in paths:
-            props = layout.operator(
-                "wm.read_homefile",
-                text=bpy.path.display_name(d),
-                icon=icon,
-            )
-            props.app_template = d
-
         layout.operator_context = 'EXEC_DEFAULT'
-
-        if show_more:
-            layout.menu("TOPBAR_MT_templates_more", text="...")
 
     def draw(self, context):
         TOPBAR_MT_file_new.draw_ex(self.layout, context)

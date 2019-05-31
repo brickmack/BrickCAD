@@ -53,7 +53,6 @@ def write_file(filepath, objects, depsgraph, scene,
 			   EXPORT_UV=True,
 			   EXPORT_APPLY_MODIFIERS=True,
 			   EXPORT_APPLY_MODIFIERS_RENDER=False,
-			   EXPORT_BLEN_OBS=True,
 			   EXPORT_GROUP_BY_OB=False,
 			   EXPORT_KEEP_VERT_ORDER=False,
 			   EXPORT_POLYGROUPS=False,
@@ -145,8 +144,7 @@ def write_file(filepath, objects, depsgraph, scene,
 							name1 = ob.name
 							obnamestring = name_compat(name1)
 
-							if EXPORT_BLEN_OBS:
-								fw('st %s %.6f %.6f %.6f\n' % (obnamestring, ob.matrix_world.translation[0], ob.matrix_world.translation[1], ob.matrix_world.translation[2]))  # Write Object name and location
+							fw('st %s %.6f %.6f %.6f\n' % (obnamestring, ob.matrix_world.translation[0], ob.matrix_world.translation[1], ob.matrix_world.translation[2]))  # Write Object name and location
 							continue
 
 						# _must_ do this before applying transformation, else tessellation may differ
@@ -196,18 +194,15 @@ def write_file(filepath, objects, depsgraph, scene,
 
 						contextSmooth = None  # Will either be true or false,  set bad to force initialization switch.
 
-						if EXPORT_BLEN_OBS or EXPORT_GROUP_BY_OB:
-							name1 = ob.name
-							name2 = ob.data.name
-							if name1 == name2:
-								obnamestring = name_compat(name1)
-							else:
-								obnamestring = '%s_%s' % (name_compat(name1), name_compat(name2))
+						name1 = ob.name
+						name2 = ob.data.name
+						if name1 == name2:
+							obnamestring = name_compat(name1)
+						else:
+							obnamestring = '%s_%s' % (name_compat(name1), name_compat(name2))
 
-							if EXPORT_BLEN_OBS:
-								fw('o %s\n' % obnamestring)  # Write Object name
-							else:  # if EXPORT_GROUP_BY_OB:
-								fw('g %s\n' % obnamestring)
+						fw('o %s\n' % obnamestring)  # Write Object name
+
 
 						subprogress2.step()
 
@@ -367,7 +362,6 @@ def _write(context, filepath,
 		   EXPORT_UV,  # ok
 		   EXPORT_APPLY_MODIFIERS,  # ok
 		   EXPORT_APPLY_MODIFIERS_RENDER,  # ok
-		   EXPORT_BLEN_OBS,
 		   EXPORT_GROUP_BY_OB,
 		   EXPORT_KEEP_VERT_ORDER,
 		   EXPORT_POLYGROUPS,
@@ -422,7 +416,6 @@ def _write(context, filepath,
 					   EXPORT_UV,
 					   EXPORT_APPLY_MODIFIERS,
 					   EXPORT_APPLY_MODIFIERS_RENDER,
-					   EXPORT_BLEN_OBS,
 					   EXPORT_GROUP_BY_OB,
 					   EXPORT_KEEP_VERT_ORDER,
 					   EXPORT_POLYGROUPS,
@@ -447,7 +440,6 @@ def save(context,
 		 use_uvs=True,
 		 use_mesh_modifiers=True,
 		 use_mesh_modifiers_render=False,
-		 use_blen_objects=True,
 		 group_by_object=False,
 		 keep_vertex_order=False,
 		 use_vertex_groups=False,
@@ -466,7 +458,6 @@ def save(context,
 		   EXPORT_UV=use_uvs,
 		   EXPORT_APPLY_MODIFIERS=use_mesh_modifiers,
 		   EXPORT_APPLY_MODIFIERS_RENDER=use_mesh_modifiers_render,
-		   EXPORT_BLEN_OBS=use_blen_objects,
 		   EXPORT_GROUP_BY_OB=group_by_object,
 		   EXPORT_KEEP_VERT_ORDER=keep_vertex_order,
 		   EXPORT_POLYGROUPS=use_vertex_groups,

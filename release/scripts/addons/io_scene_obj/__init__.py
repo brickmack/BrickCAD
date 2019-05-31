@@ -218,12 +218,6 @@ class ExportBRK(bpy.types.Operator, ExportHelper):
             default=False,
             )
 
-    # grouping group
-    use_blen_objects: BoolProperty(
-            name="Objects as BRK Objects",
-            description="",
-            default=True,
-            )
     keep_vertex_order: BoolProperty(
             name="Keep Vertex Order",
             description="",

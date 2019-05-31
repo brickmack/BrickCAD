@@ -651,6 +651,16 @@ def load(context,
                         context_object_obpart = context_object_key
                         # unique_objects[context_object_key]= None
 
+                elif line_start == b'st':
+                    print("got stud")
+                    #add empty
+                    studEmpty = bpy.data.objects.new(line_split[1].decode(), None)
+                    #bpy.context.scene.objects.link(studEmpty)
+                    bpy.context.collection.objects.link(studEmpty)
+                    studEmpty.location = [float(line_split[2].decode()), float(line_split[3].decode()), float(line_split[4].decode())]
+                    #studEmpty.empty_draw_size = 2
+                   # studEmpty.empty_draw_type = 'PLAIN_AXES'
+
                 elif line_start == b'g':
                     if use_split_groups:
                         grppart = line_value(line_split)

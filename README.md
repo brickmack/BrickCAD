@@ -1,6 +1,6 @@
 # BrickCAD
 
-Split from blender repo at commit d59538228886e5aaba13f04b27d99e5b78b241e8 https://github.com/sobotka/blender/commit/d59538228886e5aaba13f04b27d99e5b78b241e8
+Split from blender repo at commit d525c76003b3e7dcda92df09e9009c2f67f5532e https://github.com/sobotka/blender/commit/d525c76003b3e7dcda92df09e9009c2f67f5532e
 
 BrickCAD is an in-development free and open-source 3d tool for LEGO digital construction, derived from Blender.
 

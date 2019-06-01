@@ -508,6 +508,8 @@ def load(context,
 		face = None
 		vec = []
 
+		childParentPairs = [] #maintains a tuple of child objects and parent names
+
 		quick_vert_failures = 0
 		skip_quick_vert = False
 
@@ -655,6 +657,14 @@ def load(context,
 					studEmpty = bpy.data.objects.new(line_split[1].decode(), None)
 					bpy.context.collection.objects.link(studEmpty)
 					studEmpty.location = [float(line_split[2].decode()), float(line_split[3].decode()), float(line_split[4].decode())]
+					#print("Line length = " + str(len(line_split)))
+
+					if len(line_split) == 7:
+						#indicates that this empty has a parent object
+						parentName = line_split[6].decode()
+
+						#append this pair to the list for future use
+						childParentPairs.append([studEmpty, parentName])
 
 				elif line_start == b'g':
 					if use_split_groups:
@@ -729,6 +739,14 @@ def load(context,
 
 			for brk in new_objects:
 				brk.scale = scale, scale, scale
+
+		#set parent-child relationships
+		for pair in childParentPairs:
+			for obj in context.scene.objects:
+				if pair[1] == obj.name:
+					pair[0].parent = obj
+					pair[0].matrix_parent_inverse = obj.matrix_world.inverted() #take care to keep transform, otherwise children end up in weird places
+					break
 
 		progress.leave_substeps("Done.")
 		progress.leave_substeps("Finished importing: %r" % filepath)

@@ -140,11 +140,18 @@ def write_file(filepath, objects, depsgraph, scene,
 
 						if me is None:
 							#object is an empty, this is going to be used to indicate the location of a stud
-							print("me is None")
+							#print("me is None")
 							name1 = ob.name
 							obnamestring = name_compat(name1)
 
-							fw('st %s %.6f %.6f %.6f\n' % (obnamestring, ob.matrix_world.translation[0], ob.matrix_world.translation[1], ob.matrix_world.translation[2]))  # Write Object name and location
+							#check if object has a parent
+							parent = ob.parent
+							print("Parent: " + str(parent.name))
+
+							if parent is None:
+								fw('st %s %.6f %.6f %.6f\n' % (obnamestring, ob.matrix_world.translation[0], ob.matrix_world.translation[1], ob.matrix_world.translation[2]))  # Write Object name and location
+							else:
+								fw('st %s %.6f %.6f %.6f p %s\n' % (obnamestring, ob.matrix_world.translation[0], ob.matrix_world.translation[1], ob.matrix_world.translation[2], name_compat(parent.name)))  # Write Object name, location, and parent name
 							continue
 
 						# _must_ do this before applying transformation, else tessellation may differ
@@ -195,12 +202,8 @@ def write_file(filepath, objects, depsgraph, scene,
 						contextSmooth = None  # Will either be true or false,  set bad to force initialization switch.
 
 						name1 = ob.name
-						name2 = ob.data.name
-						if name1 == name2:
-							obnamestring = name_compat(name1)
-						else:
-							obnamestring = '%s_%s' % (name_compat(name1), name_compat(name2))
-
+						obnamestring = name_compat(name1)
+						
 						fw('o %s\n' % obnamestring)  # Write Object name
 
 

@@ -140,13 +140,11 @@ def write_file(filepath, objects, depsgraph, scene,
 
 						if me is None:
 							#object is an empty, this is going to be used to indicate the location of a stud
-							#print("me is None")
-							name1 = ob.name
-							obnamestring = name_compat(name1)
+							obnamestring = name_compat(ob.name)
 
 							#check if object has a parent
 							parent = ob.parent
-							print("Parent: " + str(parent.name))
+							#print("Parent: " + str(parent.name))
 
 							if parent is None:
 								fw('st %s %.6f %.6f %.6f\n' % (obnamestring, ob.matrix_world.translation[0], ob.matrix_world.translation[1], ob.matrix_world.translation[2]))  # Write Object name and location
@@ -201,8 +199,8 @@ def write_file(filepath, objects, depsgraph, scene,
 
 						contextSmooth = None  # Will either be true or false,  set bad to force initialization switch.
 
-						name1 = ob.name
-						obnamestring = name_compat(name1)
+						name = ob.name
+						obnamestring = name_compat(name)
 						
 						fw('o %s\n' % obnamestring)  # Write Object name
 

@@ -261,7 +261,7 @@ def create_mesh(new_objects,
 							for ngidx in ngon:
 								vidx = face_vert_loc_indices[ngidx]
 								if vidx == prev_vidx:
-									continue  # broken BRK... Just skip.
+									continue  #broken BRK... Just skip
 								edge_key = (prev_vidx, vidx) if (prev_vidx < vidx) else (vidx, prev_vidx)
 								prev_vidx = vidx
 								if edge_key in edge_users:
@@ -273,11 +273,11 @@ def create_mesh(new_objects,
 			else:
 				tot_loops += len_face_vert_loc_indices
 
-	# Build sharp edges
+	#build sharp edges
 	if unique_smooth_groups:
 		for edge_dict in smooth_group_users.values():
 			for key, users in edge_dict.items():
-				if users == 1:  # This edge is on the boundary of a group
+				if users == 1:  #this edge is on the boundary of a group
 					sharp_edges.add(key)
 
 	me = bpy.data.meshes.new(dataname)
@@ -286,7 +286,7 @@ def create_mesh(new_objects,
 	me.loops.add(tot_loops)
 	me.polygons.add(len(faces))
 
-	# verts_loc is a list of (x, y, z) tuples
+	#verts_loc is a list of (x, y, z) tuples
 	me.vertices.foreach_set("co", unpack_list(verts_loc))
 
 	loops_vert_idx = tuple(vidx for (face_vert_loc_indices, _, _, _, _, _) in faces for vidx in face_vert_loc_indices)
@@ -307,8 +307,7 @@ def create_mesh(new_objects,
 	me.polygons.foreach_set("use_smooth", faces_use_smooth)
 
 	if verts_nor and me.loops:
-		# Note: we store 'temp' normals in loops, since validate() may alter final mesh,
-		#	   we can only set custom lnors *after* calling it.
+		#note: we store 'temp' normals in loops, since validate() may alter final mesh, we can only set custom lnors *after* calling it
 		me.create_normals_split()
 		loops_nor = tuple(no for (_, face_vert_nor_indices, _, _, _, _) in faces for face_noidx in face_vert_nor_indices for no in verts_nor[face_noidx])
 		me.loops.foreach_set("normal", loops_nor)
@@ -321,13 +320,13 @@ def create_mesh(new_objects,
 	use_edges = use_edges and bool(edges)
 	if use_edges:
 		me.edges.add(len(edges))
-		# edges should be a list of (a, b) tuples
+		#edges should be a list of (a, b) tuples
 		me.edges.foreach_set("vertices", unpack_list(edges))
 
 	me.validate(clean_customdata=False)  # *Very* important to not remove lnors here!
 	me.update(calc_edges=use_edges)
 
-	# Un-tessellate as much as possible, in case we had to triangulate some ngons...
+	#un-tessellate as much as possible, in case we had to triangulate some ngons...
 	if fgon_edges:
 		import bmesh
 		bm = bmesh.new()
@@ -338,7 +337,7 @@ def create_mesh(new_objects,
 		try:
 			bmesh.ops.dissolve_edges(bm, edges=edges, use_verts=False)
 		except:
-			# Possible dissolve fails for some edges, but don't fail silently in case this is a real bug.
+			#possible dissolve fails for some edges, but don't fail silently in case this is a real bug
 			import traceback
 			traceback.print_exc()
 

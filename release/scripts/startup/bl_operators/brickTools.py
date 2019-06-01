@@ -192,9 +192,9 @@ class Brick:
 		self.uncheckedHoles = []
 
 		for child in self.children:
-			if child.name.startswith("stud up"):
+			if child.name.startswith("stud up") or child.name.startswith("stud_up"): #temp will later simplify this, currently maintaining backwards compatibility with the demo files
 				self.uncheckedStuds.append(child)
-			elif child.name.startswith("stud hole"):
+			elif child.name.startswith("stud hole") or child.name.startswith("stud_hole"): #ditto
 				self.uncheckedHoles.append(child)
 
 		self.links = []

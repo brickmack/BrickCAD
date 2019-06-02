@@ -54,6 +54,7 @@
 
 static const char *object_mode_op_string(eObjectMode mode)
 {
+/*
   if (mode & OB_MODE_EDIT) {
     return "OBJECT_OT_editmode_toggle";
   }
@@ -87,6 +88,7 @@ static const char *object_mode_op_string(eObjectMode mode)
   if (mode == OB_MODE_WEIGHT_GPENCIL) {
     return "GPENCIL_OT_weightmode_toggle";
   }
+*/
   return NULL;
 }
 

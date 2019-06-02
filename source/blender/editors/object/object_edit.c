@@ -1410,18 +1410,18 @@ void OBJECT_OT_mode_set(wmOperatorType *ot)
 {
   PropertyRNA *prop;
 
-  /* identifiers */
+  //identifiers
   ot->name = "Set Object Mode";
   ot->description = "Sets the object interaction mode";
   ot->idname = "OBJECT_OT_mode_set";
 
-  /* api callbacks */
+  //api callbacks
   ot->exec = object_mode_set_exec;
 
   ot->poll = object_mode_set_poll;  // ED_operator_object_active_editable;
 
-  /* flags */
-  ot->flag = 0; /* no register/undo here, leave it to operators being called */
+  //flags
+  ot->flag = 0; //no register/undo here, leave it to operators being called
 
   ot->prop = RNA_def_enum(
       ot->srna, "mode", rna_enum_object_mode_items, OB_MODE_OBJECT, "Mode", "");
@@ -1436,18 +1436,18 @@ void OBJECT_OT_mode_set_or_submode(wmOperatorType *ot)
 {
   PropertyRNA *prop;
 
-  /* identifiers */
+  //identifiers
   ot->name = "Set Object Mode or Submode";
   ot->description = "Sets the object interaction mode";
   ot->idname = "OBJECT_OT_mode_set_or_submode";
 
-  /* api callbacks */
+  //api callbacks
   ot->exec = object_mode_set_exec;
 
   ot->poll = object_mode_set_poll;  // ED_operator_object_active_editable;
 
-  /* flags */
-  ot->flag = 0; /* no register/undo here, leave it to operators being called */
+  //flags
+  ot->flag = 0; //no register/undo here, leave it to operators being called
 
   ot->prop = RNA_def_enum(
       ot->srna, "mode", rna_enum_object_mode_items, OB_MODE_OBJECT, "Mode", "");

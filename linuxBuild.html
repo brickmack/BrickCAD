@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<title>BrickCAD</title>
+	  
+		<!--bootstrap files-->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/4.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		
+		<style>
+			pre {
+				font-size: 87.5%;
+				color: #e83e8c;
+				text-align: left;
+				white-space: pre-line;
+			}
+		</style>
+	</head>
+
+	<body>
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+			<a class="navbar-brand" href="#">BrickCAD</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="index.html">Home</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="installation.html">Installation</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="questions.html">Questions</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="contributing.html">Contributing</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		
+		<main role="main" class="container">
+			<h1>Build BrickCAD from source (Linux)</h1>
+			
+			<div class="container">
+				<h2>1. Get the source</h2>
+				<pre>
+					mkdir ~/brickcad-git
+					cd ~/brickcad-git
+					git clone https://github.com/brickmack/BrickCAD.git
+					cd brickcad
+				</pre>
+			</div>
+			
+			<div class="container">
+				<h2>2. Install/update dependencies</h2>
+				<h3>Automatic dependencies installation</h3>
+				<p>
+					The preferred way to install dependencies under Linux is now to use the install_deps.sh script featured with BrickCAD sources. It currently supports Debian (and derived), Fedora, Suse and Arch distributions. When using the install_deps.sh script, you are only required to install the following dependencies: 
+				</p>
+				
+				<code>
+					git, build-essential
+				</code>
+				
+				<p>
+					Then, get the sources and run install_deps.sh
+				</p>
+				
+				<pre>
+					cd ~/brickcad-git
+					./brickcad/build_files/build_environment/install_deps.sh
+				</pre>
+				
+				<p>
+					This script works for Debian/Redhat/SuSE/Arch based distributions, both 32 and 64 bits. For other distributions, it can:
+				</p>
+				
+				<ul>
+					<li>Print the list of all main dependencies needed to build BrickCAD (<code>--show-deps</code> option).</li>
+					<li>Attempt to build main 'big' libraries you cannot easily install from packages (<code>--build-foo</code> options, see <code>--help</code> of the script for details).</li>
+				</ul>
+				
+				<p>
+					Important It might be required to re-run install-depsh.sh once in a while, as BrickCAD updates its dependencies. You will typically want to try this when you have build errors after updating the sources.
+				</p>
+				
+				<p>
+					Some commands in this script requires sudo, so you'll be likely be asked for your password. 
+				</p>
+				
+				<p>
+					When the script finishes installing/building all the packages, it'll print which parameters for CMake you should use to build BrickCAD.
+				</p>
+				
+				<h3>Manual dependencies installation</h3>
+				
+				<p>Coming soon</p>
+			</div>
+			
+			<div class="container">
+				<h2>3. Compile BrickCAD with CMake</h2>
+				<h3>Automatic CMake setup</h3>
+				
+				<p>
+					If you're not interested in manually setting up CMake build directory, configuring, building and installing in separate steps, we provide a convenience makefile in BrickCAD's source directory which sets up CMake for you.
+				</p>
+				
+				<pre>
+					cd ~/blender-git/blender
+					make
+				</pre>
+				
+				<p>
+					Once the build finishes you'll get a message like:
+				</p>
+				
+				<code>BrickCAD successfully built, run from: /home/me/brickcad-git/build_linux/bin/brickcad</code>
+				
+				<p>
+					The Blender legacy code provides some pre-defined build targets. However, only <code>make</code> with no optional target specified is currently supported. See <a href="https://wiki.blender.org/wiki/Building_Blender/Linux/Generic_Distro">the stock Blender build instructions</a> for more information.
+				</p>
+				
+				<h3>Editing CMake parameters</h3>
+				<p>Coming soon</p>
+			</div>
+		</main>
+	</body>
+</html>
+

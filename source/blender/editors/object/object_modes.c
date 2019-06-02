@@ -52,45 +52,12 @@
  *
  * \{ */
 
+/*
 static const char *object_mode_op_string(eObjectMode mode)
 {
-/*
-  if (mode & OB_MODE_EDIT) {
-    return "OBJECT_OT_editmode_toggle";
-  }
-  if (mode == OB_MODE_SCULPT) {
-    return "SCULPT_OT_sculptmode_toggle";
-  }
-  if (mode == OB_MODE_VERTEX_PAINT) {
-    return "PAINT_OT_vertex_paint_toggle";
-  }
-  if (mode == OB_MODE_WEIGHT_PAINT) {
-    return "PAINT_OT_weight_paint_toggle";
-  }
-  if (mode == OB_MODE_TEXTURE_PAINT) {
-    return "PAINT_OT_texture_paint_toggle";
-  }
-  if (mode == OB_MODE_PARTICLE_EDIT) {
-    return "PARTICLE_OT_particle_edit_toggle";
-  }
-  if (mode == OB_MODE_POSE) {
-    return "OBJECT_OT_posemode_toggle";
-  }
-  if (mode == OB_MODE_EDIT_GPENCIL) {
-    return "GPENCIL_OT_editmode_toggle";
-  }
-  if (mode == OB_MODE_PAINT_GPENCIL) {
-    return "GPENCIL_OT_paintmode_toggle";
-  }
-  if (mode == OB_MODE_SCULPT_GPENCIL) {
-    return "GPENCIL_OT_sculptmode_toggle";
-  }
-  if (mode == OB_MODE_WEIGHT_GPENCIL) {
-    return "GPENCIL_OT_weightmode_toggle";
-  }
-*/
   return NULL;
 }
+*/
 
 /**
  * Checks the mode to be set is compatible with the object
@@ -145,44 +112,11 @@ bool ED_object_mode_compat_test(const Object *ob, eObjectMode mode)
  *
  * This is so each mode's exec function can call
  */
-bool ED_object_mode_compat_set(bContext *C, Object *ob, eObjectMode mode, ReportList *reports)
-{
+bool ED_object_mode_compat_set(bContext *C, Object *ob, eObjectMode mode, ReportList *reports) {
+//temp remove
   bool ok;
-  if (!ELEM(ob->mode, mode, OB_MODE_OBJECT)) {
-    const char *opstring = object_mode_op_string(ob->mode);
-
-    WM_operator_name_call(C, opstring, WM_OP_EXEC_REGION_WIN, NULL);
-    ok = ELEM(ob->mode, mode, OB_MODE_OBJECT);
-    if (!ok) {
-      wmOperatorType *ot = WM_operatortype_find(opstring, false);
-      BKE_reportf(reports, RPT_ERROR, "Unable to execute '%s', error changing modes", ot->name);
-    }
-  }
-  else {
-    ok = true;
-  }
 
   return ok;
-}
-
-void ED_object_mode_toggle(bContext *C, eObjectMode mode)
-{
-  if (mode != OB_MODE_OBJECT) {
-    const char *opstring = object_mode_op_string(mode);
-
-    if (opstring) {
-      wmOperatorType *ot = WM_operatortype_find(opstring, false);
-      if (ot->flag & OPTYPE_USE_EVAL_DATA) {
-        /* We need to force refresh of depsgraph after undo step,
-         * redoing the operator *may* rely on some valid evaluated data. */
-        struct Main *bmain = CTX_data_main(C);
-        Scene *scene = CTX_data_scene(C);
-        ViewLayer *view_layer = CTX_data_view_layer(C);
-        BKE_scene_view_layer_graph_evaluated_ensure(bmain, scene, view_layer);
-      }
-      WM_operator_name_call_ptr(C, ot, WM_OP_EXEC_REGION_WIN, NULL);
-    }
-  }
 }
 
 /* Wrapper for operator  */

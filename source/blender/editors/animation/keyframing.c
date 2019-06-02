@@ -1825,14 +1825,6 @@ static int insert_key_exec(bContext *C, wmOperator *op)
     return OPERATOR_CANCELLED;
   }
 
-  /* exit the edit mode to make sure that those object data properties that have been
-   * updated since the last switching to the edit mode will be keyframed correctly
-   */
-  if (obedit && ANIM_keyingset_find_id(ks, (ID *)obedit->data)) {
-    ED_object_mode_toggle(C, OB_MODE_EDIT);
-    ob_edit_mode = true;
-  }
-
   /* try to insert keyframes for the channels specified by KeyingSet */
   success = ANIM_apply_keyingset(C, NULL, NULL, ks, MODIFYKEY_MODE_INSERT, cfra);
   if (G.debug & G_DEBUG) {
@@ -1841,11 +1833,6 @@ static int insert_key_exec(bContext *C, wmOperator *op)
                 "Keying set '%s' - successfully added %d keyframes",
                 ks->name,
                 success);
-  }
-
-  /* restore the edit mode if necessary */
-  if (ob_edit_mode) {
-    ED_object_mode_toggle(C, OB_MODE_EDIT);
   }
 
   /* report failure or do updates? */

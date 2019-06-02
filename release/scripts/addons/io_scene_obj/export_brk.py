@@ -379,10 +379,6 @@ def _write(context, filepath,
 		depsgraph = context.evaluated_depsgraph_get()
 		scene = context.scene
 
-		# Exit edit mode before exporting, so current object states are exported properly.
-		#if bpy.ops.object.mode_set.poll():
-		#	bpy.ops.object.mode_set(mode='OBJECT')
-
 		orig_frame = scene.frame_current
 
 		# Export an animation?

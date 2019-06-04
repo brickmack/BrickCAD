@@ -16,6 +16,7 @@
 # ***** END GPL LICENSE BLOCK *****
 
 set(INC
+#temp check if these are all necessary
   ../include
   ../io
   ../../blenkernel
@@ -24,6 +25,11 @@ set(INC
   ../../makesrna
   ../../windowmanager
   ../../../../intern/guardedalloc
+  ../../blentranslation
+  ../../gpu
+  ../../imbuf
+  ../../../../intern/atomic
+  ../../../../intern/glew-mx
 )
 
 set(INC_SYS
@@ -49,12 +55,14 @@ set(LIB
   bf_editor_space_node
   bf_editor_space_outliner
   bf_editor_space_script
-  bf_editor_space_sequencer
   bf_editor_space_statusbar
   bf_editor_space_text
   bf_editor_space_topbar
   bf_editor_space_userpref
   bf_editor_space_view3d
+
+  bf_editor_interface
+  bf_editor_util
 )
 
 blender_add_lib(bf_editor_space_api "${SRC}" "${INC}" "${INC_SYS}" "${LIB}")

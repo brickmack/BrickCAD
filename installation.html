@@ -53,19 +53,55 @@
 					Please see the build instructions for your specific operating system
 				</p>
 					
-					<ul>
-						<li>
-							<a href="linuxBuild.html">Linux</a>
-						</li>
-						<li>
-							Windows (no build instructions yet, but the <a href="https://wiki.blender.org/wiki/Building_Blender/Windows">Blender build instructions</a> may be useful)
-						</li>
-						<li>
-							MacOS (no build instructions yet, but the <a href="https://wiki.blender.org/wiki/Building_Blender/Mac">Blender build instructions</a>)
-						</li>
-					</ul>
+				<ul>
+					<li>
+						<a href="linuxBuild.html">Linux</a>
+					</li>
+					<li>
+						Windows (no build instructions yet, but the <a href="https://wiki.blender.org/wiki/Building_Blender/Windows">Blender build instructions</a> may be useful)
+					</li>
+					<li>
+						MacOS (no build instructions yet, but the <a href="https://wiki.blender.org/wiki/Building_Blender/Mac">Blender build instructions</a>)
+					</li>
+				</ul>
 				
-					<p>Just looking for the source code? Click <a href="https://github.com/brickmack/BrickCAD">here</a> to visit the Github repository</p>
+				<p>Just looking for the source code? Click <a href="https://github.com/brickmack/BrickCAD">here</a> to visit the Github repository</p>
+				
+				<p>BrickCAD has been tested on the following operating systems. Tested it and got a different result? Tested on a different OS? Know a solution to a problem noted here? Contact me!</p>
+				
+				<table class="table">
+					<tr style="text-align:center;">
+						<th>Operating system</th>
+						<th>Date</th>
+						<th>Build</th>
+						<th>Execution</th>
+						<th>Notes</th>
+					</tr>
+					
+					<tr>
+						<td>Ubuntu 18.04.2 LTS</td>
+						<td>4 June 2019</td>
+						<td style="background:lightgreen">Success</td>
+						<td style="background:lightgreen">Success</td>
+						<td></td>
+					</tr>
+					
+					<tr>
+						<td>Lubuntu 19.04</td>
+						<td>3 June 2019</td>
+						<td style="background:lightgreen">Success</td>
+						<td style="background:#ff726f">Fail</td>
+						<td>Hardware issue on test machine, obsolete GPU without OpenGL 3.3 support</td>
+					</tr>
+					
+					<tr>
+						<td>Windows 10</td>
+						<td>June 1 2019</td>
+						<td style="background:#ff726f">Fail</td>
+						<td style="background:#ff726f"></td>
+						<td>Possibly an issue with my installation of CMake? Couldn't get it added to PATH</td>
+					</tr>
+				</table>
 			</div>
 		</main>
 	</body>

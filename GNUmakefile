@@ -22,18 +22,18 @@
 # This Makefile does an out-of-source CMake build in ../build_`OS`_`CPU`
 # eg:
 #   ../build_linux_i386
-# This is for users who like to configure & build blender with a single command.
+# This is for users who like to configure & build BrickCAD with a single command.
 
 define HELP_TEXT
 
 Convenience Targets
-   Provided for building Blender, (multiple at once can be used).
+   Provided for building BrickCAD, (multiple at once can be used).
 
    * debug:         Build a debug binary.
    * full:          Enable all supported dependencies & options.
    * lite:          Disable non essential features for a smaller binary and faster build.
    * headless:      Build without an interface (renderfarm or server automation).
-   * cycles:        Build Cycles standalone only, without Blender.
+   * cycles:        Build Cycles standalone only, without BrickCAD.
    * bpy:           Build as a python module which can be loaded from python directly.
    * deps:          Build library dependencies (intended only for platform maintainers).
 
@@ -57,7 +57,7 @@ Package Targets
    * package_archive:	Build an archive package.
 
 Testing Targets
-   Not associated with building Blender.
+   Not associated with building BrickCAD.
 
    * test:
      Run ctest, currently tests import/export,
@@ -71,25 +71,25 @@ Testing Targets
    * test_deprecated:
      Checks for deprecation tags in our code which may need to be removed
    * test_style_c:
-     Checks C/C++ conforms with blenders style guide:
+     Checks C/C++ conforms with BrickCAD's style guide:
      https://wiki.blender.org/wiki/Source/Code_Style
    * test_style_c_qtc:
      Same as test_style but outputs QtCreator tasks format
    * test_style_osl:
-     Checks OpenShadingLanguage conforms with blenders style guide:
+     Checks OpenShadingLanguage conforms with BrickCAD's style guide:
      https://wiki.blender.org/wiki/Source/Code_Style
    * test_style_osl_qtc:
-     Checks OpenShadingLanguage conforms with blenders style guide:
+     Checks OpenShadingLanguage conforms with BrickCAD's style guide:
      https://wiki.blender.org/wiki/Source/Code_Style
 
 Static Source Code Checking
-   Not associated with building Blender.
+   Not associated with building BrickCAD.
 
-   * check_cppcheck:        Run blender source through cppcheck (C & C++).
-   * check_clang_array:     Run blender source through clang array checking script (C & C++).
-   * check_splint:          Run blenders source through splint (C only).
-   * check_sparse:          Run blenders source through sparse (C only).
-   * check_smatch:          Run blenders source through smatch (C only).
+   * check_cppcheck:        Run BrickCAD's source through cppcheck (C & C++).
+   * check_clang_array:     Run BrickCAD's source through clang array checking script (C & C++).
+   * check_splint:          Run BrickCAD's source through splint (C only).
+   * check_sparse:          Run BrickCAD's source through sparse (C only).
+   * check_smatch:          Run BrickCAD's source through smatch (C only).
    * check_spelling_c:      Check for spelling errors (C/C++ only).
    * check_spelling_c_qtc:  Same as check_spelling_c but outputs QtCreator tasks format.
    * check_spelling_osl:    Check for spelling errors (OSL only).
@@ -97,12 +97,12 @@ Static Source Code Checking
    * check_descriptions:    Check for duplicate/invalid descriptions.
 
 Utilities
-   Not associated with building Blender.
+   Not associated with building BrickCAD.
 
    * icons:
      Updates PNG icons from SVG files.
 
-     Optionally pass in variables: 'BLENDER_BIN', 'INKSCAPE_BIN'
+     Optionally pass in variables: 'BRICKCAD_BIN', 'INKSCAPE_BIN'
      otherwise default paths are used.
 
      Example
@@ -111,11 +111,11 @@ Utilities
    * icons_geom:
      Updates Geometry icons from BLEND file.
 
-     Optionally pass in variable: 'BLENDER_BIN'
+     Optionally pass in variable: 'BRICKCAD_BIN'
      otherwise default paths are used.
 
      Example
-        make icons_geom BLENDER_BIN=/path/to/blender
+        make icons_geom BRICKCAD_BIN=/path/to/blender
 
    * tgz:
      Create a compressed archive of the source code.
@@ -136,11 +136,11 @@ Environment Variables
    * NPROCS:                Number of processes to use building (auto-detect when omitted).
 
 Documentation Targets
-   Not associated with building Blender.
+   Not associated with building BrickCAD.
 
    * doc_py:        Generate sphinx python api docs.
    * doc_doxy:      Generate doxygen C/C++ docs.
-   * doc_dna:       Generate blender file format reference.
+   * doc_dna:       Generate BrickCAD file format reference.
    * doc_man:       Generate manpage.
 
 Information
@@ -159,7 +159,7 @@ CPU:=$(shell uname -m)
 
 
 # Source and Build DIR's
-BLENDER_DIR:=$(shell pwd -P)
+BRICKCAD_DIR:=$(shell pwd -P)
 BUILD_TYPE:=Release
 
 ifndef BUILD_CMAKE_ARGS
@@ -167,18 +167,18 @@ ifndef BUILD_CMAKE_ARGS
 endif
 
 ifndef BUILD_DIR
-	BUILD_DIR:=$(shell dirname "$(BLENDER_DIR)")/build_$(OS_NCASE)
+	BUILD_DIR:=$(shell dirname "$(BRICKCAD_DIR)")/build_$(OS_NCASE)
 endif
 
 # Dependencies DIR's
-DEPS_SOURCE_DIR:=$(BLENDER_DIR)/build_files/build_environment
+DEPS_SOURCE_DIR:=$(BRICKCAD_DIR)/build_files/build_environment
 
 ifndef DEPS_BUILD_DIR
 	DEPS_BUILD_DIR:=$(BUILD_DIR)/deps
 endif
 
 ifndef DEPS_INSTALL_DIR
-	DEPS_INSTALL_DIR:=$(shell dirname "$(BLENDER_DIR)")/lib/$(OS_NCASE)
+	DEPS_INSTALL_DIR:=$(shell dirname "$(BRICKCAD_DIR)")/lib/$(OS_NCASE)
 
 	ifneq ($(OS_NCASE),darwin)
 		# Add processor type to directory name
@@ -202,35 +202,35 @@ ifneq "$(findstring debug, $(MAKECMDGOALS))" ""
 endif
 ifneq "$(findstring full, $(MAKECMDGOALS))" ""
 	BUILD_DIR:=$(BUILD_DIR)_full
-	BUILD_CMAKE_ARGS:=$(BUILD_CMAKE_ARGS) -C"$(BLENDER_DIR)/build_files/cmake/config/blender_full.cmake"
+	BUILD_CMAKE_ARGS:=$(BUILD_CMAKE_ARGS) -C"$(BRICKCAD_DIR)/build_files/cmake/config/blender_full.cmake"
 endif
 ifneq "$(findstring lite, $(MAKECMDGOALS))" ""
 	BUILD_DIR:=$(BUILD_DIR)_lite
-	BUILD_CMAKE_ARGS:=$(BUILD_CMAKE_ARGS) -C"$(BLENDER_DIR)/build_files/cmake/config/blender_lite.cmake"
+	BUILD_CMAKE_ARGS:=$(BUILD_CMAKE_ARGS) -C"$(BRICKCAD_DIR)/build_files/cmake/config/blender_lite.cmake"
 endif
 ifneq "$(findstring cycles, $(MAKECMDGOALS))" ""
 	BUILD_DIR:=$(BUILD_DIR)_cycles
-	BUILD_CMAKE_ARGS:=$(BUILD_CMAKE_ARGS) -C"$(BLENDER_DIR)/build_files/cmake/config/cycles_standalone.cmake"
+	BUILD_CMAKE_ARGS:=$(BUILD_CMAKE_ARGS) -C"$(BRICKCAD_DIR)/build_files/cmake/config/cycles_standalone.cmake"
 endif
 ifneq "$(findstring headless, $(MAKECMDGOALS))" ""
 	BUILD_DIR:=$(BUILD_DIR)_headless
-	BUILD_CMAKE_ARGS:=$(BUILD_CMAKE_ARGS) -C"$(BLENDER_DIR)/build_files/cmake/config/blender_headless.cmake"
+	BUILD_CMAKE_ARGS:=$(BUILD_CMAKE_ARGS) -C"$(BRICKCAD_DIR)/build_files/cmake/config/blender_headless.cmake"
 endif
 ifneq "$(findstring bpy, $(MAKECMDGOALS))" ""
 	BUILD_DIR:=$(BUILD_DIR)_bpy
-	BUILD_CMAKE_ARGS:=$(BUILD_CMAKE_ARGS) -C"$(BLENDER_DIR)/build_files/cmake/config/bpy_module.cmake"
+	BUILD_CMAKE_ARGS:=$(BUILD_CMAKE_ARGS) -C"$(BRICKCAD_DIR)/build_files/cmake/config/bpy_module.cmake"
 endif
 
 
 # -----------------------------------------------------------------------------
-# Blender binary path
+# BrickCAD binary path
 
-# Allow passing in own BLENDER_BIN so developers who don't
+# Allow passing in own BRICKCAD_BIN so developers who don't
 # use the default build path can still use utility helpers.
 ifeq ($(OS), Darwin)
-	BLENDER_BIN?="$(BUILD_DIR)/bin/brickcad.app/Contents/MacOS/brickcad"
+	BRICKCAD_BIN?="$(BUILD_DIR)/bin/brickcad.app/Contents/MacOS/brickcad"
 else
-	BLENDER_BIN?="$(BUILD_DIR)/bin/brickcad"
+	BRICKCAD_BIN?="$(BUILD_DIR)/bin/brickcad"
 endif
 
 
@@ -251,7 +251,7 @@ endif
 # Macro for configuring cmake
 
 CMAKE_CONFIG = cmake $(BUILD_CMAKE_ARGS) \
-                     -H"$(BLENDER_DIR)" \
+                     -H"$(BRICKCAD_DIR)" \
                      -B"$(BUILD_DIR)" \
                      -DCMAKE_BUILD_TYPE_INIT:STRING=$(BUILD_TYPE)
 
@@ -268,10 +268,10 @@ endif
 
 
 # -----------------------------------------------------------------------------
-# Build Blender
+# Build BrickCAD
 all: .FORCE
 	@echo
-	@echo Configuring Blender in \"$(BUILD_DIR)\" ...
+	@echo Configuring BrickCAD in \"$(BUILD_DIR)\" ...
 
 #	# if test ! -f $(BUILD_DIR)/CMakeCache.txt ; then \
 #	# 	$(CMAKE_CONFIG); \
@@ -281,11 +281,11 @@ all: .FORCE
 	@$(CMAKE_CONFIG)
 
 	@echo
-	@echo Building Blender ...
+	@echo Building BrickCAD ...
 	$(MAKE) -C "$(BUILD_DIR)" -s -j $(NPROCS) install
 	@echo
 	@echo edit build configuration with: "$(BUILD_DIR)/CMakeCache.txt" run make again to rebuild.
-	@echo BrickCAD successfully built, run from: $(BLENDER_BIN)
+	@echo BrickCAD successfully built, run from: $(BRICKCAD_BIN)
 	@echo
 
 debug: all
@@ -366,41 +366,41 @@ test_deprecated: .FORCE
 test_style_c: .FORCE
 	# run our own checks on C/C++ style
 	PYTHONIOENCODING=utf_8 $(PYTHON) \
-	    "$(BLENDER_DIR)/source/tools/check_source/check_style_c.py" \
-	    "$(BLENDER_DIR)/source/blender" \
-	    "$(BLENDER_DIR)/source/creator" \
+	    "$(BRICKCAD_DIR)/source/tools/check_source/check_style_c.py" \
+	    "$(BRICKCAD_DIR)/source/blender" \
+	    "$(BRICKCAD_DIR)/source/creator" \
 	    --no-length-check
 
 test_style_c_qtc: .FORCE
 	# run our own checks on C/C++ style
 	USE_QTC_TASK=1 \
 	PYTHONIOENCODING=utf_8 $(PYTHON) \
-	    "$(BLENDER_DIR)/source/tools/check_source/check_style_c.py" \
-	    "$(BLENDER_DIR)/source/blender" \
-	    "$(BLENDER_DIR)/source/creator" \
+	    "$(BRICKCAD_DIR)/source/tools/check_source/check_style_c.py" \
+	    "$(BRICKCAD_DIR)/source/blender" \
+	    "$(BRICKCAD_DIR)/source/creator" \
 	    --no-length-check \
 	    > \
-	    "$(BLENDER_DIR)/test_style.tasks"
+	    "$(BRICKCAD_DIR)/test_style.tasks"
 	@echo "written: test_style.tasks"
 
 
 test_style_osl: .FORCE
 	# run our own checks on C/C++ style
 	PYTHONIOENCODING=utf_8 $(PYTHON) \
-	    "$(BLENDER_DIR)/source/tools/check_source/check_style_c.py" \
-	    "$(BLENDER_DIR)/intern/cycles/kernel/shaders" \
-	    "$(BLENDER_DIR)/release/scripts/templates_osl"
+	    "$(BRICKCAD_DIR)/source/tools/check_source/check_style_c.py" \
+	    "$(BRICKCAD_DIR)/intern/cycles/kernel/shaders" \
+	    "$(BRICKCAD_DIR)/release/scripts/templates_osl"
 
 
 test_style_osl_qtc: .FORCE
 	# run our own checks on C/C++ style
 	USE_QTC_TASK=1 \
 	PYTHONIOENCODING=utf_8 $(PYTHON) \
-	    "$(BLENDER_DIR)/source/tools/check_source/check_style_c.py" \
-	    "$(BLENDER_DIR)/intern/cycles/kernel/shaders" \
-	    "$(BLENDER_DIR)/release/scripts/templates_osl" \
+	    "$(BRICKCAD_DIR)/source/tools/check_source/check_style_c.py" \
+	    "$(BRICKCAD_DIR)/intern/cycles/kernel/shaders" \
+	    "$(BRICKCAD_DIR)/release/scripts/templates_osl" \
 	    > \
-	    "$(BLENDER_DIR)/test_style.tasks"
+	    "$(BRICKCAD_DIR)/test_style.tasks"
 	@echo "written: test_style.tasks"
 
 # -----------------------------------------------------------------------------
@@ -414,7 +414,7 @@ project_netbeans: .FORCE
 	$(PYTHON) build_files/cmake/cmake_netbeans_project.py "$(BUILD_DIR)"
 
 project_eclipse: .FORCE
-	cmake -G"Eclipse CDT4 - Unix Makefiles" -H"$(BLENDER_DIR)" -B"$(BUILD_DIR)"
+	cmake -G"Eclipse CDT4 - Unix Makefiles" -H"$(BRICKCAD_DIR)" -B"$(BUILD_DIR)"
 
 
 # -----------------------------------------------------------------------------
@@ -424,65 +424,65 @@ project_eclipse: .FORCE
 check_cppcheck: .FORCE
 	$(CMAKE_CONFIG)
 	cd "$(BUILD_DIR)" ; \
-	$(PYTHON) "$(BLENDER_DIR)/build_files/cmake/cmake_static_check_cppcheck.py" 2> \
-	    "$(BLENDER_DIR)/check_cppcheck.txt"
+	$(PYTHON) "$(BRICKCAD_DIR)/build_files/cmake/cmake_static_check_cppcheck.py" 2> \
+	    "$(BRICKCAD_DIR)/check_cppcheck.txt"
 	@echo "written: check_cppcheck.txt"
 
 check_clang_array: .FORCE
 	$(CMAKE_CONFIG)
 	cd "$(BUILD_DIR)" ; \
-	$(PYTHON) "$(BLENDER_DIR)/build_files/cmake/cmake_static_check_clang_array.py"
+	$(PYTHON) "$(BRICKCAD_DIR)/build_files/cmake/cmake_static_check_clang_array.py"
 
 check_splint: .FORCE
 	$(CMAKE_CONFIG)
 	cd "$(BUILD_DIR)" ; \
-	$(PYTHON) "$(BLENDER_DIR)/build_files/cmake/cmake_static_check_splint.py"
+	$(PYTHON) "$(BRICKCAD_DIR)/build_files/cmake/cmake_static_check_splint.py"
 
 check_sparse: .FORCE
 	$(CMAKE_CONFIG)
 	cd "$(BUILD_DIR)" ; \
-	$(PYTHON) "$(BLENDER_DIR)/build_files/cmake/cmake_static_check_sparse.py"
+	$(PYTHON) "$(BRICKCAD_DIR)/build_files/cmake/cmake_static_check_sparse.py"
 
 check_smatch: .FORCE
 	$(CMAKE_CONFIG)
 	cd "$(BUILD_DIR)" ; \
-	$(PYTHON) "$(BLENDER_DIR)/build_files/cmake/cmake_static_check_smatch.py"
+	$(PYTHON) "$(BRICKCAD_DIR)/build_files/cmake/cmake_static_check_smatch.py"
 
 check_spelling_py: .FORCE
 	cd "$(BUILD_DIR)" ; \
 	PYTHONIOENCODING=utf_8 $(PYTHON) \
-	    "$(BLENDER_DIR)/source/tools/check_source/check_spelling.py" \
-	    "$(BLENDER_DIR)/release/scripts"
+	    "$(BRICKCAD_DIR)/source/tools/check_source/check_spelling.py" \
+	    "$(BRICKCAD_DIR)/release/scripts"
 
 check_spelling_c: .FORCE
 	cd "$(BUILD_DIR)" ; \
 	PYTHONIOENCODING=utf_8 $(PYTHON) \
-	    "$(BLENDER_DIR)/source/tools/check_source/check_spelling.py" \
-	    "$(BLENDER_DIR)/source" \
-	    "$(BLENDER_DIR)/intern/cycles" \
-	    "$(BLENDER_DIR)/intern/guardedalloc" \
-	    "$(BLENDER_DIR)/intern/ghost" \
+	    "$(BRICKCAD_DIR)/source/tools/check_source/check_spelling.py" \
+	    "$(BRICKCAD_DIR)/source" \
+	    "$(BRICKCAD_DIR)/intern/cycles" \
+	    "$(BRICKCAD_DIR)/intern/guardedalloc" \
+	    "$(BRICKCAD_DIR)/intern/ghost" \
 
 check_spelling_c_qtc: .FORCE
 	cd "$(BUILD_DIR)" ; USE_QTC_TASK=1 \
 	PYTHONIOENCODING=utf_8 $(PYTHON) \
-	    "$(BLENDER_DIR)/source/tools/check_source/check_spelling.py" \
-	    "$(BLENDER_DIR)/source" \
-	    "$(BLENDER_DIR)/intern/cycles" \
-	    "$(BLENDER_DIR)/intern/guardedalloc" \
-	    "$(BLENDER_DIR)/intern/ghost" \
+	    "$(BRICKCAD_DIR)/source/tools/check_source/check_spelling.py" \
+	    "$(BRICKCAD_DIR)/source" \
+	    "$(BRICKCAD_DIR)/intern/cycles" \
+	    "$(BRICKCAD_DIR)/intern/guardedalloc" \
+	    "$(BRICKCAD_DIR)/intern/ghost" \
 	    > \
-	    "$(BLENDER_DIR)/check_spelling_c.tasks"
+	    "$(BRICKCAD_DIR)/check_spelling_c.tasks"
 
 check_spelling_osl: .FORCE
 	cd "$(BUILD_DIR)" ;\
 	PYTHONIOENCODING=utf_8 $(PYTHON) \
-	    "$(BLENDER_DIR)/source/tools/check_source/check_spelling.py" \
-	    "$(BLENDER_DIR)/intern/cycles/kernel/shaders"
+	    "$(BRICKCAD_DIR)/source/tools/check_source/check_spelling.py" \
+	    "$(BRICKCAD_DIR)/intern/cycles/kernel/shaders"
 
 check_descriptions: .FORCE
-	$(BLENDER_BIN) --background -noaudio --factory-startup --python \
-	    "$(BLENDER_DIR)/source/tools/check_source/check_descriptions.py"
+	$(BRICKCAD_BIN) --background -noaudio --factory-startup --python \
+	    "$(BRICKCAD_DIR)/source/tools/check_source/check_descriptions.py"
 
 # -----------------------------------------------------------------------------
 # Utilities
@@ -493,14 +493,14 @@ tgz: .FORCE
 
 INKSCAPE_BIN?="inkscape"
 icons: .FORCE
-	BLENDER_BIN=$(BLENDER_BIN) INKSCAPE_BIN=$(INKSCAPE_BIN) \
-		"$(BLENDER_DIR)/release/datafiles/blender_icons_update.py"
-	BLENDER_BIN=$(BLENDER_BIN) INKSCAPE_BIN=$(INKSCAPE_BIN) \
-		"$(BLENDER_DIR)/release/datafiles/prvicons_update.py"
+	BRICKCAD_BIN=$(BRICKCAD_BIN) INKSCAPE_BIN=$(INKSCAPE_BIN) \
+		"$(BRICKCAD_DIR)/release/datafiles/blender_icons_update.py"
+	BRICKCAD_BIN=$(BRICKCAD_BIN) INKSCAPE_BIN=$(INKSCAPE_BIN) \
+		"$(BRICKCAD_DIR)/release/datafiles/prvicons_update.py"
 
 icons_geom: .FORCE
-	BLENDER_BIN=$(BLENDER_BIN) \
-	    "$(BLENDER_DIR)/release/datafiles/blender_icons_geom_update.py"
+	BRICKCAD_BIN=$(BRICKCAD_BIN) \
+	    "$(BRICKCAD_DIR)/release/datafiles/blender_icons_geom_update.py"
 
 update: .FORCE
 	if [ "$(OS_NCASE)" = "darwin" ] && [ ! -d "../lib/$(OS_NCASE)" ]; then \
@@ -527,25 +527,25 @@ format: .FORCE
 # Simple version of ./doc/python_api/sphinx_doc_gen.sh with no PDF generation.
 doc_py: .FORCE
 	ASAN_OPTIONS=halt_on_error=0 \
-	$(BLENDER_BIN) --background -noaudio --factory-startup \
+	$(BRICKCAD_BIN) --background -noaudio --factory-startup \
 		--python doc/python_api/sphinx_doc_gen.py
 	cd doc/python_api ; sphinx-build -b html sphinx-in sphinx-out
-	@echo "docs written into: '$(BLENDER_DIR)/doc/python_api/sphinx-out/index.html'"
+	@echo "docs written into: '$(BRICKCAD_DIR)/doc/python_api/sphinx-out/index.html'"
 
 doc_doxy: .FORCE
 	cd doc/doxygen; doxygen Doxyfile
-	@echo "docs written into: '$(BLENDER_DIR)/doc/doxygen/html/index.html'"
+	@echo "docs written into: '$(BRICKCAD_DIR)/doc/doxygen/html/index.html'"
 
 doc_dna: .FORCE
-	$(BLENDER_BIN) --background -noaudio --factory-startup \
+	$(BRICKCAD_BIN) --background -noaudio --factory-startup \
 		--python doc/blender_file_format/BlendFileDnaExporter_25.py
-	@echo "docs written into: '$(BLENDER_DIR)/doc/blender_file_format/dna.html'"
+	@echo "docs written into: '$(BRICKCAD_DIR)/doc/blender_file_format/dna.html'"
 
 doc_man: .FORCE
-	$(PYTHON) doc/manpage/blender.1.py $(BLENDER_BIN) blender.1
+	$(PYTHON) doc/manpage/blender.1.py $(BRICKCAD_BIN) blender.1
 
 help_features: .FORCE
-	@$(PYTHON) "$(BLENDER_DIR)/build_files/cmake/cmake_print_build_options.py" $(BLENDER_DIR)"/CMakeLists.txt"
+	@$(PYTHON) "$(BRICKCAD_DIR)/build_files/cmake/cmake_print_build_options.py" $(BRICKCAD_DIR)"/CMakeLists.txt"
 
 clean: .FORCE
 	$(MAKE) -C "$(BUILD_DIR)" clean

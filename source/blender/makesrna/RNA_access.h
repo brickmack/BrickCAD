@@ -744,6 +744,7 @@ extern StructRNA RNA_XnorController;
 extern StructRNA RNA_XorController;
 extern StructRNA RNA_uiPopover;
 extern StructRNA RNA_wmOwnerIDs;
+extern StructRNA RNA_SpacePartslistEditor;
 
 /* Pointer
  *

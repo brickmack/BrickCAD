@@ -1611,6 +1611,27 @@ typedef struct SpaceStatusBar {
 /** \} */
 
 /* -------------------------------------------------------------------- */
+/** \name Partslist
+ * \{ */
+
+/* These two lines with # tell makesdna this struct can be excluded.
+ * Should be: #ifndef WITH_GLOBAL_AREA_WRITING */
+#
+#
+typedef struct SpacePartslist {
+  SpaceLink *next, *prev;
+  /** Storage of regions for inactive spaces. */
+  ListBase regionbase;
+  char spacetype;
+  char link_flag;
+  char _pad0[6];
+  /* End 'SpaceLink' header. */
+} SpacePartslist;
+
+/** \} */
+
+
+/* -------------------------------------------------------------------- */
 /** \name Space Defines (eSpace_Type)
  * \{ */
 
@@ -1625,7 +1646,7 @@ typedef enum eSpace_Type {
   SPACE_FILE = 5,
   SPACE_IMAGE = 6,
   SPACE_INFO = 7,
-  SPACE_SEQ = 8,
+  SPACE_SEQ = 8, //deprecated
   SPACE_TEXT = 9,
 #ifdef DNA_DEPRECATED
   SPACE_IMASEL = 10, /* deprecated */
@@ -1643,6 +1664,7 @@ typedef enum eSpace_Type {
   SPACE_CLIP = 20,
   SPACE_TOPBAR = 21,
   SPACE_STATUSBAR = 22,
+  SPACE_PARTSLIST = 23,
 
   SPACE_TYPE_LAST = SPACE_STATUSBAR,
 } eSpace_Type;

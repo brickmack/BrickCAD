@@ -60,6 +60,7 @@ set(LIB
   bf_editor_space_topbar
   bf_editor_space_userpref
   bf_editor_space_view3d
+  bf_editor_space_partslist
 
   bf_editor_interface
   bf_editor_util

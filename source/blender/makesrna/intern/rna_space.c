@@ -80,6 +80,7 @@ const EnumPropertyItem rna_enum_space_type_items[] = {
      "Node Editor",
      "Editor for node-based shading and compositing tools"},
     {SPACE_CLIP, "CLIP_EDITOR", ICON_TRACKER, "Movie Clip Editor", "Motion tracking tools"},
+    {SPACE_PARTSLIST, "PARTSLIST_EDITOR", 0, "Partslist Editor", "Partslist editor"},
 
     /* Animation */
     {0, "", ICON_NONE, "Animation", ""},
@@ -508,6 +509,8 @@ static StructRNA *rna_Space_refine(struct PointerRNA *ptr)
       return &RNA_SpacePreferences;
     case SPACE_CLIP:
       return &RNA_SpaceClipEditor;
+    case SPACE_PARTSLIST:
+      return &RNA_SpacePartslistEditor;
     default:
       return &RNA_Space;
   }
@@ -5694,6 +5697,17 @@ static void rna_def_space_node(BlenderRNA *brna)
   RNA_api_space_node(srna);
 }
 
+static void rna_def_space_partslist(BlenderRNA *brna)
+{
+  StructRNA *srna;
+  PropertyRNA *prop;
+
+  srna = RNA_def_struct(brna, "SpacePartslistEditor", "Space");
+  RNA_def_struct_sdna(srna, "SpacePartslist");
+  RNA_def_struct_ui_text(srna, "Space Partslist Editor", "Partslist editor space data");
+}
+
+
 static void rna_def_space_clip(BlenderRNA *brna)
 {
   StructRNA *srna;
@@ -6008,6 +6022,7 @@ void RNA_def_space(BlenderRNA *brna)
   rna_def_node_tree_path(brna);
   rna_def_space_node(brna);
   rna_def_space_clip(brna);
+  rna_def_space_partslist(brna);
 }
 
 #endif

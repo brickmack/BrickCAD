@@ -236,56 +236,6 @@ class TOPBAR_MT_file(Menu):
         layout.operator("wm.quit_blender", text="Quit", icon='QUIT')
 
 
-class TOPBAR_MT_file_new(Menu):
-#temp remove
-    bl_label = "New File"
-
-    @staticmethod
-    def app_template_paths():
-        import os
-
-        template_paths = bpy.utils.app_template_paths()
-
-        # expand template paths
-        app_templates = []
-        for path in template_paths:
-            for d in os.listdir(path):
-                if d.startswith(("__", ".")):
-                    continue
-                template = os.path.join(path, d)
-                if os.path.isdir(template):
-                    app_templates.append(d)
-
-        return sorted(app_templates)
-
-    @staticmethod
-    def draw_ex(layout, _context, *, use_splash=False, use_more=False):
-        layout.operator_context = 'INVOKE_DEFAULT'
-
-        # Limit number of templates in splash screen, spill over into more menu.
-        paths = TOPBAR_MT_file_new.app_template_paths()
-        splash_limit = 5
-
-        if use_splash:
-            icon = 'FILE_NEW'
-            show_more = len(paths) > (splash_limit - 1)
-            if show_more:
-                paths = paths[:splash_limit - 2]
-        else:
-            icon = 'NONE'
-            show_more = False
-
-        # Draw application templates.
-        if not use_more:
-            props = layout.operator("wm.read_homefile", text="New", icon=icon)
-            props.app_template = ""
-
-        layout.operator_context = 'EXEC_DEFAULT'
-
-    def draw(self, context):
-        TOPBAR_MT_file_new.draw_ex(self.layout, context)
-
-
 class TOPBAR_MT_file_recover(Menu):
     bl_label = "Recover"
 
@@ -360,13 +310,6 @@ class TOPBAR_MT_app_support(Menu):
         layout.operator(
             "wm.url_open", text="Blender Store", icon='URL',
         ).url = "https://store.blender.org"
-
-
-class TOPBAR_MT_templates_more(Menu):
-    bl_label = "Templates"
-
-    def draw(self, context):
-        bpy.types.TOPBAR_MT_file_new.draw_ex(self.layout, context, use_more=True)
 
 
 class TOPBAR_MT_file_import(Menu):
@@ -604,7 +547,7 @@ class TOPBAR_MT_file_context_menu(Menu):
         layout = self.layout
 
         layout.operator_context = 'INVOKE_AREA'
-        layout.menu("TOPBAR_MT_file_new", text="New", icon='FILE_NEW')
+        layout.operator("wm.read_homefile", text="New", icon='FILE_NEW')
         layout.operator("wm.open_mainfile", text="Open...", icon='FILE_FOLDER')
 
         layout.separator()
@@ -755,10 +698,8 @@ classes = (
     TOPBAR_MT_app_about,
     TOPBAR_MT_app_support,
     TOPBAR_MT_file,
-    TOPBAR_MT_file_new,
     TOPBAR_MT_file_recover,
     TOPBAR_MT_file_defaults,
-    TOPBAR_MT_templates_more,
     TOPBAR_MT_file_import,
     TOPBAR_MT_file_export,
     TOPBAR_MT_file_external_data,

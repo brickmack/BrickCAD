@@ -355,27 +355,7 @@ def km_window(params):
         ("wm.quit_blender", {"type": 'Q', "value": 'PRESS', "ctrl": True}, None),
 
         # Quick menu and toolbar
-        op_menu("SCREEN_MT_user_menu", {"type": 'Q', "value": 'PRESS'}),
-
-        # Fast editor switching
-        *(
-            ("screen.space_type_set_or_cycle",
-             {"type": k, "value": 'PRESS', "shift": True},
-             {"properties": [("space_type", t)]})
-            for k, t in (
-                ('F1', 'FILE_BROWSER'),
-                ('F2', 'CLIP_EDITOR'),
-                ('F3', 'NODE_EDITOR'),
-                ('F4', 'CONSOLE'),
-                ('F5', 'VIEW_3D'),
-                ('F6', 'GRAPH_EDITOR'),
-                ('F7', 'PROPERTIES'),
-                ('F9', 'OUTLINER'),
-                ('F10', 'IMAGE_EDITOR'),
-                ('F11', 'TEXT_EDITOR'),
-                ('F12', 'DOPESHEET_EDITOR'),
-            )
-        ),
+       # op_menu("SCREEN_MT_user_menu", {"type": 'Q', "value": 'PRESS'}), #temp remove
 
         # NDOF settings
         op_menu("USERPREF_MT_ndof_settings", {"type": 'NDOF_BUTTON_MENU', "value": 'PRESS'}),

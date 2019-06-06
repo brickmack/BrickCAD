@@ -325,6 +325,11 @@ bool ED_operator_info_active(bContext *C)
   return ed_spacetype_test(C, SPACE_INFO);
 }
 
+bool ED_operator_partslist_active(bContext *C)
+{
+  return ed_spacetype_test(C, SPACE_PARTSLIST);
+}
+
 bool ED_operator_console_active(bContext *C)
 {
   return ed_spacetype_test(C, SPACE_CONSOLE);

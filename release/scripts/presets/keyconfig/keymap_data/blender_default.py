@@ -1695,6 +1695,30 @@ def km_info(params):
 
     return keymap
 
+def km_partslist(params):
+    items = []
+    keymap = (
+        "Partslist",
+        {"space_type": 'PARTSLIST_EDITOR', "region_type": 'WINDOW'},
+        {"items": items},
+    )
+
+    items.extend([
+        ("partslist.select_pick", {"type": 'LEFTMOUSE', "value": 'CLICK'}, None),
+        ("partslist.select_pick", {"type": 'LEFTMOUSE', "value": 'CLICK', "shift": True},
+         {"properties": [("extend", True)]}),
+        ("partslist.select_box", {"type": 'EVT_TWEAK_L', "value": 'ANY'},
+         {"properties": [("wait_for_input", False)]}),
+        *_template_items_select_actions(params, "partslist.select_all"),
+        ("partslist.select_box", {"type": 'B', "value": 'PRESS'}, None),
+        ("partslist.report_replay", {"type": 'R', "value": 'PRESS'}, None),
+        ("partslist.report_delete", {"type": 'X', "value": 'PRESS'}, None),
+        ("partslist.report_delete", {"type": 'DEL', "value": 'PRESS'}, None),
+        ("partslist.report_copy", {"type": 'C', "value": 'PRESS', "ctrl": True}, None),
+    ])
+
+    return keymap
+
 
 def km_file_browser(_params):
     items = []
@@ -5615,6 +5639,7 @@ def generate_keymaps(params=None):
         km_node_generic(params),
         km_node_editor(params),
         km_info(params),
+        km_partslist(params),
         km_file_browser(params),
         km_file_browser_main(params),
         km_file_browser_buttons(params),

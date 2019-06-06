@@ -331,6 +331,7 @@ bool ED_operator_sequencer_active_editable(struct bContext *C);
 bool ED_operator_image_active(struct bContext *C);
 bool ED_operator_nla_active(struct bContext *C);
 bool ED_operator_info_active(struct bContext *C);
+bool ED_operator_partslist_active(struct bContext *C);
 bool ED_operator_console_active(struct bContext *C);
 
 bool ED_operator_object_active(struct bContext *C);

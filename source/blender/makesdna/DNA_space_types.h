@@ -1626,6 +1626,50 @@ typedef struct SpacePartslist {
   char link_flag;
   char _pad0[6];
   /* End 'SpaceLink' header. */
+
+  struct Text *text;
+
+  int top, viewlines;
+  short flags, menunr;
+
+  /** User preference, is font_size! */
+  short lheight;
+  /**
+   * Runtime computed, character width
+   * and the number of chars to use when showing line numbers.
+   */
+  char cwidth, linenrs_tot;
+  int left;
+  int showlinenrs;
+  int tabnumber;
+
+  short showsyntax;
+  short line_hlight;
+  short overwrite;
+  /** Run python while editing, evil. */
+  short live_edit;
+  float pix_per_line;
+
+  struct rcti txtscroll, txtbar;
+
+  int wordwrap, doplugins;
+
+  /** ST_MAX_FIND_STR. */
+  char findstr[256];
+  /** ST_MAX_FIND_STR. */
+  char replacestr[256];
+
+  /** Column number to show right margin at. */
+  short margin_column;
+  /** Actual lineheight, dpi controlled. */
+  short lheight_dpi;
+  char _pad[4];
+
+  /** Cache for faster drawing. */
+  void *drawcache;
+
+  /** Runtime, for scroll increments smaller than a line. */
+  float scroll_accum[2];
 } SpacePartslist;
 
 /** \} */

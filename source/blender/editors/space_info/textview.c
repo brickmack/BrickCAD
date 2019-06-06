@@ -140,6 +140,8 @@ static int console_draw_string(ConsoleDrawContext *cdc,
   int *offsets;  /* offsets of line beginnings for wrapping */
   int y_next;
 
+  str = "test";
+
   str_len = console_wrap_offsets(str, str_len, cdc->console_width, &tot_lines, &offsets);
   y_next = cdc->xy[1] + cdc->lheight * tot_lines;
 

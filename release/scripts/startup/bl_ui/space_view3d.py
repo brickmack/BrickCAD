@@ -570,11 +570,6 @@ class VIEW3D_HT_header(Header):
 
         sub = row.row(align=True)
         sub.ui_units_x = 5.5
-        sub.operator_menu_enum(
-            "object.mode_set", "mode",
-            text=bpy.app.translations.pgettext_iface(act_mode_item.name, act_mode_i18n_context),
-            icon=act_mode_item.icon,
-        )
         del act_mode_item
 
         layout.template_header_3D_mode()
@@ -4624,16 +4619,6 @@ class VIEW3D_MT_edit_gpencil_interpolate(Menu):
         layout.operator("gpencil.interpolate_sequence", text="Sequence")
 
 
-class VIEW3D_MT_object_mode_pie(Menu):
-    bl_label = "Mode"
-
-    def draw(self, _context):
-        layout = self.layout
-
-        pie = layout.menu_pie()
-        pie.operator_enum("object.mode_set", "mode")
-
-
 class VIEW3D_MT_view_pie(Menu):
     bl_label = "View"
     bl_idname = "VIEW3D_MT_view_pie"
@@ -6635,7 +6620,6 @@ classes = (
     VIEW3D_MT_edit_armature_delete,
     VIEW3D_MT_edit_gpencil_transform,
     VIEW3D_MT_edit_gpencil_interpolate,
-    VIEW3D_MT_object_mode_pie,
     VIEW3D_MT_view_pie,
     VIEW3D_MT_transform_gizmo_pie,
     VIEW3D_MT_shading_pie,

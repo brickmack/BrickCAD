@@ -55,24 +55,24 @@ static void partslist_report_color(unsigned char *fg,
   int shade = do_tint ? 0 : -6;
 
   if (report->flag & SELECT) {
-    bg_id = TH_INFO_SELECTED;
-    fg_id = TH_INFO_SELECTED_TEXT;
+    bg_id = TH_PARTSLIST_SELECTED;
+    fg_id = TH_PARTSLIST_SELECTED_TEXT;
   }
   else if (report->type & RPT_ERROR_ALL) {
-    bg_id = TH_INFO_ERROR;
-    fg_id = TH_INFO_ERROR_TEXT;
+    bg_id = TH_PARTSLIST_ERROR;
+    fg_id = TH_PARTSLIST_ERROR_TEXT;
   }
   else if (report->type & RPT_WARNING_ALL) {
-    bg_id = TH_INFO_WARNING;
-    fg_id = TH_INFO_WARNING_TEXT;
+    bg_id = TH_PARTSLIST_WARNING;
+    fg_id = TH_PARTSLIST_WARNING_TEXT;
   }
   else if (report->type & RPT_INFO_ALL) {
-    bg_id = TH_INFO_INFO;
-    fg_id = TH_INFO_INFO_TEXT;
+    bg_id = TH_PARTSLIST_INFO;
+    fg_id = TH_PARTSLIST_INFO_TEXT;
   }
   else if (report->type & RPT_DEBUG_ALL) {
-    bg_id = TH_INFO_DEBUG;
-    fg_id = TH_INFO_DEBUG_TEXT;
+    bg_id = TH_PARTSLIST_DEBUG;
+    fg_id = TH_PARTSLIST_DEBUG_TEXT;
   }
   else {
     bg_id = TH_BACK;

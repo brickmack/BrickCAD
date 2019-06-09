@@ -39,6 +39,29 @@
 
 #include "textview.h"
 
+//temp, some can be removed later. Needed for handling objects
+#include "BKE_collection.h"
+#include "BKE_context.h"
+#include "BKE_gpencil.h"
+#include "BKE_layer.h"
+#include "BKE_main.h"
+#include "BKE_object.h"
+#include "BKE_scene.h"
+#include "BKE_sequencer.h"
+#include "BKE_workspace.h"
+#include "ED_object.h"
+#include "ED_screen.h"
+#include "ED_select_utils.h"
+#include "ED_sequencer.h"
+#include "ED_undo.h"
+#include "ED_gpencil.h"
+#include "BKE_context.h"
+//#include "../../python/generic/py_capi_utils.h" //NOT NEEDED JUST TESTING
+//#include <Python.h>
+//#include "BPY_extern.h"
+//#include "bpy_operator.h"
+//#include "bpy_operator_wrap.h"
+
 static void console_font_begin(const int font_id, const int lheight)
 {
   /* 0.875 is based on: 16 pixels lines get 14 pixel text */
@@ -140,7 +163,13 @@ static int console_draw_string(ConsoleDrawContext *cdc,
   int *offsets;  /* offsets of line beginnings for wrapping */
   int y_next;
 
+/*
+  //testing. Help.
   str = "test";
+  bContext *C = (bContext *)BPy_GetContext(); //temp
+  ViewLayer *view_layer = CTX_data_view_layer(C);
+  ED_object_base_deselect_all(view_layer, NULL, SEL_DESELECT);
+*/
 
   str_len = console_wrap_offsets(str, str_len, cdc->console_width, &tot_lines, &offsets);
   y_next = cdc->xy[1] + cdc->lheight * tot_lines;

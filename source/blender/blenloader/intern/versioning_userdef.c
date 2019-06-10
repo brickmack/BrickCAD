@@ -484,11 +484,6 @@ void BLO_version_defaults_userpref_blend(Main *bmain, UserDef *userdef)
     }
   }
 
-  if (!USER_VERSION_ATLEAST(280, 33)) {
-    /* Enable GLTF addon by default. */
-    BKE_addon_ensure(&userdef->addons, "io_scene_gltf2");
-  }
-
   if (!USER_VERSION_ATLEAST(280, 35)) {
     /* Preserve RMB select setting after moving to Python and changing default value. */
     if (USER_VERSION_ATLEAST(280, 32) || !(userdef->flag & USER_LMOUSESELECT)) {

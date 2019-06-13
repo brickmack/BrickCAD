@@ -1,0 +1,14 @@
+# Blender 2.80 (sub 72), Commit date: 2019-06-10 22:01, Hash 8b04df879c46
+
+# backtrace
+../build_linux/bin/brickcad(BLI_system_backtrace+0x33) [0x555a761cc193]
+../build_linux/bin/brickcad(+0xb36030) [0x555a75faa030]
+/lib/x86_64-linux-gnu/libc.so.6(+0x3ef20) [0x7f0184761f20]
+/lib/x86_64-linux-gnu/libc.so.6(+0xbb564) [0x7f01847de564]
+../build_linux/bin/brickcad(BLO_update_defaults_userpref_blend+0x79) [0x555a7692c2f9]
+../build_linux/bin/brickcad(+0xf2bd69) [0x555a7639fd69]
+../build_linux/bin/brickcad(wm_homefile_read+0x2ad) [0x555a763a2c5d]
+../build_linux/bin/brickcad(WM_init+0x143) [0x555a763a8a73]
+../build_linux/bin/brickcad(main+0x2b8) [0x555a75f911a8]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xe7) [0x7f0184744b97]
+../build_linux/bin/brickcad(_start+0x2a) [0x555a75fa65ca]

@@ -423,7 +423,7 @@ def load(context,
 		 ):
 	"""
 	Called by the user interface or another script.
-	load_brk(path) - should give acceptable results.
+	load(path) - should give acceptable results.
 	This function passes the file and sends the data off
 		to be split into objects and then converted into mesh objects
 	"""
@@ -656,7 +656,14 @@ def load(context,
 					studEmpty = bpy.data.objects.new(line_split[1].decode(), None)
 					bpy.context.collection.objects.link(studEmpty)
 					studEmpty.location = [float(line_split[2].decode()), float(line_split[3].decode()), float(line_split[4].decode())]
-					#print("Line length = " + str(len(line_split)))
+
+					#add stud mesh
+					#print("Adding stud mesh")
+					#mesh = bpy.data.meshes.new("mesh")
+					
+					#studObj = bpy.data.objects.new("test", None)
+					#bpy.context.collection.objects.link(studObj)
+					#studObj.location = [0,0,0]
 
 					if len(line_split) == 7:
 						#indicates that this empty has a parent object

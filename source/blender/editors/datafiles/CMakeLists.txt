@@ -841,6 +841,10 @@ if(WITH_BLENDER)
     data_to_c_simple(../../../../release/datafiles/brushicons/gp_brush_erase_hard.png SRC)
     data_to_c_simple(../../../../release/datafiles/brushicons/gp_brush_erase_stroke.png SRC)
 
+
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../../../release/datafiles/bricks/
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/../../../../release/datafiles/bricks/)
+
   endif()
 
   data_to_c_simple(../../../../release/datafiles/startup.blend SRC)

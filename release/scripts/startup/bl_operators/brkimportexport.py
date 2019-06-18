@@ -1,36 +1,4 @@
-# ##### BEGIN GPL LICENSE BLOCK #####
-#
-#  This program is free software; you can redistribute it and/or
-#  modify it under the terms of the GNU General Public License
-#  as published by the Free Software Foundation; either version 2
-#  of the License, or (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with this program; if not, write to the Free Software Foundation,
-#  Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-#
-# ##### END GPL LICENSE BLOCK #####
-
-# <pep8-80 compliant>
-
 # Derived from io_scene_obj in stock Blender, by Campbell Barton, Jiri Hnidek, and Paolo Ciccone
-
-bl_info = {
-	"name": "BrickCAD BRK format",
-	"author": "",
-	"version": (1, 0, 0),
-	"blender": (2, 80, 0),
-	"location": "File > Import-Export",
-	"description": "Import-Export BRK, Import BRK mesh, UV's, materials and textures",
-	"warning": "",
-	"wiki_url": "",
-	"support": 'OFFICIAL',
-	"category": "Import-Export"}
 
 if "bpy" in locals():
 	import importlib
@@ -57,7 +25,6 @@ from bpy_extras.io_utils import (
 
 @orientation_helper(axis_forward='-Z', axis_up='Y')
 class ImportBRK(bpy.types.Operator, ImportHelper):
-	"""Load a BrickCAD BRK File"""
 	bl_idname = "import_scene.obj"
 	bl_label = "Import BRK"
 	bl_options = {'PRESET', 'UNDO'}

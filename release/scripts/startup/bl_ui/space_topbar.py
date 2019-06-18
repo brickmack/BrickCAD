@@ -217,11 +217,6 @@ class TOPBAR_MT_file(Menu):
 
         layout.separator()
 
-        layout.menu("TOPBAR_MT_file_import", icon='IMPORT')
-        layout.menu("TOPBAR_MT_file_export", icon='EXPORT')
-
-        layout.separator()
-
         layout.menu("TOPBAR_MT_file_external_data")
 
         layout.separator()
@@ -310,28 +305,6 @@ class TOPBAR_MT_app_support(Menu):
         layout.operator(
             "wm.url_open", text="Blender Store", icon='URL',
         ).url = "https://store.blender.org"
-
-
-class TOPBAR_MT_file_import(Menu):
-    bl_idname = "TOPBAR_MT_file_import"
-    bl_label = "Import"
-
-    def draw(self, _context):
-        if bpy.app.build_options.collada:
-            self.layout.operator("wm.collada_import", text="Collada (Default) (.dae)")
-        if bpy.app.build_options.alembic:
-            self.layout.operator("wm.alembic_import", text="Alembic (.abc)")
-
-
-class TOPBAR_MT_file_export(Menu):
-    bl_idname = "TOPBAR_MT_file_export"
-    bl_label = "Export"
-
-    def draw(self, _context):
-        if bpy.app.build_options.collada:
-            self.layout.operator("wm.collada_export", text="Collada (Default) (.dae)")
-        if bpy.app.build_options.alembic:
-            self.layout.operator("wm.alembic_export", text="Alembic (.abc)")
 
 
 class TOPBAR_MT_file_external_data(Menu):
@@ -557,11 +530,6 @@ class TOPBAR_MT_file_context_menu(Menu):
 
         layout.separator()
 
-        layout.menu("TOPBAR_MT_file_import", icon='IMPORT')
-        layout.menu("TOPBAR_MT_file_export", icon='EXPORT')
-
-        layout.separator()
-
         layout.operator("screen.userpref_show", text="Preferences...", icon='PREFERENCES')
 
 
@@ -700,8 +668,6 @@ classes = (
     TOPBAR_MT_file,
     TOPBAR_MT_file_recover,
     TOPBAR_MT_file_defaults,
-    TOPBAR_MT_file_import,
-    TOPBAR_MT_file_export,
     TOPBAR_MT_file_external_data,
     TOPBAR_MT_file_previews,
     TOPBAR_MT_edit,

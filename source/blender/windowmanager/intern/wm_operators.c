@@ -3643,9 +3643,6 @@ static void gesture_box_modal_keymap(wmKeyConfig *keyconf)
   WM_modalkeymap_assign(keymap, "NODE_OT_viewer_border");
   WM_modalkeymap_assign(keymap, "PAINT_OT_hide_show");
   WM_modalkeymap_assign(keymap, "OUTLINER_OT_select_box");
-  //  WM_modalkeymap_assign(keymap, "SCREEN_OT_box_select"); // template
-  WM_modalkeymap_assign(keymap, "SEQUENCER_OT_select_box");
-  WM_modalkeymap_assign(keymap, "SEQUENCER_OT_view_ghost_border");
   WM_modalkeymap_assign(keymap, "UV_OT_select_box");
   WM_modalkeymap_assign(keymap, "CLIP_OT_select_box");
   WM_modalkeymap_assign(keymap, "CLIP_OT_graph_select_box");

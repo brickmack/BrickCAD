@@ -36,6 +36,8 @@ from bpy.props import ( #some of these arent necessary, remove later
 
 classes = (
     brick_panels.VIEW3D_PT_tools_add_brick_panel,
+    brick_panels.VIEW3D_PT_tools_select_material_panel,
+    brick_panels.MaterialMenu,
     brick_operators.VIEW3D_OT_add_brick,
 )
 

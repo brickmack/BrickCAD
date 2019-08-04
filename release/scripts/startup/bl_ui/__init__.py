@@ -106,7 +106,6 @@ _namespace = globals()
 _modules_loaded = [_namespace[name] for name in _modules]
 del _namespace
 
-
 def register():
     from bpy.utils import register_class
     for mod in _modules_loaded:

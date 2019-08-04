@@ -22,9 +22,6 @@
 
 """
 This script imports a BrickCAD BRK file to BrickCAD or Blender.
-
-Usage:
-Run this script from "File->Import" menu and then load the desired BRK file.
 """
 
 import array
